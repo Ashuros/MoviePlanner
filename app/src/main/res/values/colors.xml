@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mp_holo_blue_dark">#060015</color>
+    <color name="translucent_blue">#802EBDF5</color>
+    <color name="opaque_red">#f00</color>
+</resources>
