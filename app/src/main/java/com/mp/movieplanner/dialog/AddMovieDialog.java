@@ -46,8 +46,7 @@ public class AddMovieDialog extends DialogFragment {
 		// Use the Builder class for convenient dialog construction
 		String title = getArguments().getString(ARG_TITLE);
 		
-		String movieTitle = String.format(getString(R.string.dialog_add_movie_title),
-				title);
+		String movieTitle = String.format(getString(R.string.dialog_add_movie_title), title);
 					
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(movieTitle)
