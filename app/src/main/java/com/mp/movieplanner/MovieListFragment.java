@@ -34,7 +34,7 @@ public class MovieListFragment extends ListFragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         Log.i(TAG, "onAttach(Activity)");
-        movieService = ((MoviePlannerApp) activity.getApplication()).getDataManager();
+        movieService = ((MoviePlannerApp) activity.getApplication()).getMovieService();
         try {
             mCallback = (OnMovieSelectedListener) activity;
         } catch (ClassCastException e) {

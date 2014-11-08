@@ -61,7 +61,7 @@ public class MovieDetailsFragment extends Fragment {
 	}
 	
 	public void updateMovieView(long position){
-		Movie movie = app.getDataManager().getMovie(position);
+		Movie movie = app.getMovieService().getMovie(position);
 		Log.i("UPDATE_MOVIE_VIEW", movie.toString());
 		image.setTag(position);
 		new DownloadListItemTask(app.getImageCache(), image, position).execute(movie.getPosterPath());

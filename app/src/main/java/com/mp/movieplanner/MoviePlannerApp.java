@@ -16,7 +16,7 @@ public class MoviePlannerApp extends Application {
     private ConnectivityManager cMgr;
     private ImageCache mCache;
 
-    public MovieService getDataManager() {
+    public MovieService getMovieService() {
         return movieService;
     }
 
