@@ -12,9 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-import com.mp.movieplanner.data.DataManager;
+import com.mp.movieplanner.data.service.DataManager;
 import com.mp.movieplanner.data.MoviePlannerContract.Movies;
-import com.mp.movieplanner.model.Movie;
 
 public class MovieListFragment extends ListFragment
 		implements LoaderManager.LoaderCallbacks<Cursor> {

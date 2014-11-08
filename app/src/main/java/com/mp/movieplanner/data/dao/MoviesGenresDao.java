@@ -1,8 +1,9 @@
-package com.mp.movieplanner.data;
+package com.mp.movieplanner.data.dao;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mp.movieplanner.data.MovieGenreKey;
 import com.mp.movieplanner.data.MoviePlannerContract.Genres;
 import com.mp.movieplanner.data.MoviePlannerContract.MoviesGenres;
 import com.mp.movieplanner.model.Genre;

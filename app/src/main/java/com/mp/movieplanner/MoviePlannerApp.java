@@ -6,8 +6,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 
-import com.mp.movieplanner.data.DataManager;
-import com.mp.movieplanner.data.DataManagerImpl;
+import com.mp.movieplanner.data.service.DataManager;
+import com.mp.movieplanner.data.service.impl.MovieServiceImpl;
 import com.mp.movieplanner.util.ImageCache;
 
 public class MoviePlannerApp extends Application {
@@ -32,7 +32,7 @@ public class MoviePlannerApp extends Application {
 //			@Override
 //			public void run() {
 		cMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);	
-		mDataManager = new DataManagerImpl(MoviePlannerApp.this);
+		mDataManager = new MovieServiceImpl(MoviePlannerApp.this);
 		mCache = new ImageCache();
 //			}
 //		}).start();

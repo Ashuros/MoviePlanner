@@ -1,4 +1,4 @@
-package com.mp.movieplanner.data;
+package com.mp.movieplanner.data.dao;
 
 import java.util.List;
 

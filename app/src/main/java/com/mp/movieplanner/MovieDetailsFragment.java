@@ -1,10 +1,8 @@
 package com.mp.movieplanner;
 
-import com.mp.movieplanner.data.DataManager;
 import com.mp.movieplanner.model.Genre;
 import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.tasks.DownloadListItemTask;
-import com.mp.movieplanner.MoviePlannerApp;
 
 import android.app.Activity;
 import android.os.Bundle;

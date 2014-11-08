@@ -16,7 +16,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.mp.movieplanner.data.DataManager;
+import com.mp.movieplanner.data.service.DataManager;
 import com.mp.movieplanner.dialog.AddMovieDialog;
 import com.mp.movieplanner.model.MovieSearchResult;
 import com.mp.movieplanner.util.Utils;

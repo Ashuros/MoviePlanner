@@ -10,6 +10,7 @@ import com.mp.movieplanner.MoviePlannerApp;
 import com.mp.movieplanner.data.MoviePlannerContract.Genres;
 import com.mp.movieplanner.data.MoviePlannerContract.Movies;
 import com.mp.movieplanner.data.MoviePlannerContract.MoviesGenres;
+import com.mp.movieplanner.data.dao.GenreDao;
 import com.mp.movieplanner.model.Genre;
 import com.mp.movieplanner.util.Utils;
 

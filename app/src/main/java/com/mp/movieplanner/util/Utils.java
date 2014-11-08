@@ -75,7 +75,7 @@ public class Utils {
 	}
 	
 	public static HttpClient getHttpClient() {
-		return httpClient;
+		return AndroidHttpClient.newInstance("");
 	}	
 	
 	
