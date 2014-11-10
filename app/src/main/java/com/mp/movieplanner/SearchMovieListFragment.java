@@ -48,15 +48,13 @@ public class SearchMovieListFragment extends ListFragment implements
         try {
             mCallback = (OnSearchElementSelectedListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnSearchElementSelectedListener");
+            throw new ClassCastException(activity.toString() + " must implement OnSearchElementSelectedListener");
         }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Log.i(TAG, "onCreate(Bundle)");
 
         final int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
@@ -75,10 +73,8 @@ public class SearchMovieListFragment extends ListFragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.i(TAG, "onActivityCreated(Bundle)");
-
         getListView().setLongClickable(true);
         getListView().setOnItemLongClickListener(this);
-
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -101,8 +97,7 @@ public class SearchMovieListFragment extends ListFragment implements
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view,
-                                   int position, long id) {
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         movieToAdd = (MovieSearchResult) parent.getItemAtPosition(position);
         DialogFragment dialog = AddMovieDialog.newInstance(movieToAdd.getTitle());
         dialog.setTargetFragment(this, 0);
@@ -127,7 +122,7 @@ public class SearchMovieListFragment extends ListFragment implements
         @Override
         protected Long doInBackground(MovieSearchResult... movies) {
             try {
-                return movieService.saveMovie(Utils.getJsonParser().find(movies[0].getId()));
+                return movieService.saveMovie(Utils.getTheMovieDBClient().find(movies[0].getId()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -146,23 +141,18 @@ public class SearchMovieListFragment extends ListFragment implements
         }
     }
 
-    // Inner seperate thread class which performs search for QUERY
     private class SearchMovieTask extends AsyncTask<String, Void, List<MovieSearchResult>> {
         @Override
         protected List<MovieSearchResult> doInBackground(String... query) {
             if (mApp.isConnectionPresent()) {
-                try {
-                    return Utils.getJsonParser().search(query[0]);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                return Utils.getTheMovieDBClient().search(query[0]);
             }
             return Collections.emptyList();
         }
 
         @Override
         protected void onPostExecute(List<MovieSearchResult> movies) {
-            if (movies.size() != 0) {
+            if (movies.size() > 0) {
                 adapter.clear();
                 for (MovieSearchResult movie : movies) {
                     adapter.add(movie);
