@@ -38,8 +38,7 @@ public class MovieListFragment extends ListFragment
         try {
             mCallback = (OnMovieSelectedListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnMovieSelectedListener");
+            throw new ClassCastException(activity.toString() + " must implement OnMovieSelectedListener");
         }
     }
 

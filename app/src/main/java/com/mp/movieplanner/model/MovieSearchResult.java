@@ -1,5 +1,8 @@
 package com.mp.movieplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieSearchResult {
 
 	private String title;
@@ -20,12 +23,7 @@ public class MovieSearchResult {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
-	@Override
-	public String toString() {
-		return title + " " + id;
-	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -67,24 +65,12 @@ public class MovieSearchResult {
 		}
 		return true;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+    @Override
+    public String toString() {
+        return "MovieSearchResult{" +
+                "title='" + title + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

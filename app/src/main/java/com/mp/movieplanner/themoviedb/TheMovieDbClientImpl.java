@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class TheMovieDbClientImpl implements TheMovieDbClient {
 
     public TheMovieDbClientImpl() {
         restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new GsonHttpMessageConverter());
+        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
     }
 
     @Override
@@ -57,8 +58,7 @@ public class TheMovieDbClientImpl implements TheMovieDbClient {
     private List<MovieSearchResult> searchMovies(String query) throws JSONException {
         query = replaceWhitespacesInQuery(query);
         MovieSearchResultResponse response = queryRestService(SEARCH_FEED_URL, MovieSearchResultResponse.class, query);
-        MovieSearchResult[] movies = response.getResults();
-        return new ArrayList<>(Arrays.asList(movies));
+        return response.getResults();
     }
 
     private String replaceWhitespacesInQuery(String query) {
@@ -90,7 +90,7 @@ public class TheMovieDbClientImpl implements TheMovieDbClient {
                 movie.setPopularity(Double.parseDouble(jsonMovie.getString(POPULARITY)));
                 movie.setPosterPath(jsonMovie.getString(POSTER));
                 movie.setReleaseDate(jsonMovie.getString(DATE));
-                Log.i("JSON", movie.getGenres().toString() + "\n" + movie.getMovieId()
+                Log.i("JSON", movie.findAllGenres().toString() + "\n" + movie.getMovieId()
                         + "\n" + movie.getOriginalTitle() + "\n"
                         + movie.getOverview() + "\n"
                         + movie.getPopularity() + "\n"
@@ -122,7 +122,7 @@ public class TheMovieDbClientImpl implements TheMovieDbClient {
         return resultGenres;
     }
 
-    public Set<Genre> getGenres() {
+    public Set<Genre> findAllGenres() {
         /*BufferedReader reader =
                 new BufferedReader(
                         new InputStreamReader(getInputStream(GET_GENRES)));

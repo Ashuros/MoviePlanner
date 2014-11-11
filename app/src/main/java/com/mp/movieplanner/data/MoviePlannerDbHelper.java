@@ -69,7 +69,7 @@ public class MoviePlannerDbHelper extends SQLiteOpenHelper {
 			new Thread( new Runnable() {
 				@Override
 				public void run() {
-					for (Genre genre : Utils.getTheMovieDBClient().getGenres()) {
+					for (Genre genre : Utils.getTheMovieDBClient().findAllGenres()) {
 						genreDao.save(genre);
 					}
 				}				

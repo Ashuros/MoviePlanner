@@ -1,6 +1,7 @@
 package com.mp.movieplanner.model;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class MovieSearchResultResponse {
 
@@ -8,7 +9,7 @@ public class MovieSearchResultResponse {
     private int total_pages;
     private int total_results;
 
-    private MovieSearchResult[] results;
+    private List<MovieSearchResult> results;
 
     public int getPage() {
         return page;
@@ -18,11 +19,11 @@ public class MovieSearchResultResponse {
         this.page = page;
     }
 
-    public MovieSearchResult[] getResults() {
+    public List<MovieSearchResult> getResults() {
         return results;
     }
 
-    public void setResults(MovieSearchResult[] results) {
+    public void setResults(List<MovieSearchResult> results) {
         this.results = results;
     }
 
@@ -48,7 +49,7 @@ public class MovieSearchResultResponse {
                 "page=" + page +
                 ", total_pages=" + total_pages +
                 ", total_results=" + total_results +
-                ", results=" + Arrays.toString(results) +
+                ", results=" + results +
                 '}';
     }
 }
