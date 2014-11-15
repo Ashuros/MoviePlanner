@@ -1,6 +1,7 @@
-package com.mp.movieplanner.model;
+package com.mp.movieplanner.themoviedb.response;
 
-import java.util.Arrays;
+import com.mp.movieplanner.model.MovieSearchResult;
+
 import java.util.List;
 
 public class MovieSearchResultResponse {

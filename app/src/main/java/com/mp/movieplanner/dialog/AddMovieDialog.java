@@ -3,12 +3,13 @@ package com.mp.movieplanner.dialog;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 
 import com.mp.movieplanner.R;
- 
+
+
 public class AddMovieDialog extends DialogFragment {
 	
 	public interface NoticeDialogListener {

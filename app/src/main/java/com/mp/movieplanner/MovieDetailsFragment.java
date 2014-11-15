@@ -5,8 +5,8 @@ import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.tasks.DownloadListItemTask;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,9 +64,9 @@ public class MovieDetailsFragment extends Fragment {
 		Movie movie = app.getMovieService().getMovie(position);
 		Log.i("UPDATE_MOVIE_VIEW", movie.toString());
 		image.setTag(position);
-		new DownloadListItemTask(app.getImageCache(), image, position).execute(movie.getPosterPath());
-		originalTitle.setText(movie.getOriginalTitle());
-		releaseDate.setText(movie.getReleaseDate());
+		new DownloadListItemTask(app.getImageCache(), image, position).execute(movie.getPoster_path());
+		originalTitle.setText(movie.getOriginal_title());
+		releaseDate.setText(movie.getRelease_date());
 		//popularity.setText(String.valueOf(movie.getPopularity()));
 		overview.setText(movie.getOverview());
 		StringBuilder genreLabels = new StringBuilder();

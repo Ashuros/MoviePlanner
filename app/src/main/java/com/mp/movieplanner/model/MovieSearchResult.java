@@ -5,72 +5,59 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieSearchResult {
 
-	private String title;
 	private String id;
-	
-	public String getTitle() {
-		return title;
-	}
-	
-	public void setTitle(String name) {
-		this.title = name;
-	}
-	
-	public String getId() {
-		return id;
-	}
-	
-	public void setId(String id) {
-		this.id = id;
-	}
+	private String title;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((this.title == null) ? 0 : this.title.hashCode());
-		result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		
-		if (obj == null) {
-			return false;
-		}
-		
-		if (!(obj instanceof MovieSearchResult)) {
-			return false;
-		}
-		
-		MovieSearchResult other = (MovieSearchResult) obj;
-		if (title == null) {
-			if (other.title != null) {
-				return false;
-			}
-		} else if (!title.equals(other.title)) {
-			return false;
-		}
-		
-		if (this.id == null) {
-			if (other.id != null) {
-				return false;
-			}
-		} else if (!this.id.equals(other.id)) {
-			return false;
-		}
-		return true;
-	}
+    public MovieSearchResult() {
+
+    }
+
+    public MovieSearchResult(String id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MovieSearchResult that = (MovieSearchResult) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (title != null ? !title.equals(that.title) : that.title != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        return result;
+    }
 
     @Override
     public String toString() {
         return "MovieSearchResult{" +
-                "title='" + title + '\'' +
-                ", id='" + id + '\'' +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
                 '}';
     }
 }

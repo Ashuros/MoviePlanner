@@ -9,7 +9,7 @@ import java.util.Set;
 
 public interface TheMovieDbClient {
 	
-	public List<MovieSearchResult> search(String searchString);
-	public Movie find(String id) throws IOException;
-	public Set<Genre> findAllGenres();
+	public List<MovieSearchResult> searchMovies(String searchString);
+	public Movie findMovie(String id) throws IOException;
+	public Set<Genre> retrieveAllGenres();
 }

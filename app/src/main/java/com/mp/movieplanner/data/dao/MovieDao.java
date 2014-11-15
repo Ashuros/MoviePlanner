@@ -21,10 +21,10 @@ public class MovieDao implements Dao<Movie> {
 	@Override
 	public long save(Movie movie) {
 		ContentValues values = new ContentValues();
-		values.put(Movies.MOVIE_ID, movie.getMovieId());
-		values.put(Movies.ORIGINAL_TITLE, movie.getOriginalTitle());
-		values.put(Movies.RELEASE_DATE, movie.getReleaseDate());
-		values.put(Movies.POSTER_PATH, movie.getPosterPath());
+		values.put(Movies.MOVIE_ID, movie.getId());
+		values.put(Movies.ORIGINAL_TITLE, movie.getOriginal_title());
+		values.put(Movies.RELEASE_DATE, movie.getRelease_date());
+		values.put(Movies.POSTER_PATH, movie.getPoster_path());
 		values.put(Movies.POPULARITY, movie.getPopularity());
 		values.put(Movies.OVERVIEW, movie.getOverview());
 		return db.insert(Movies.TABLE_NAME, null, values);
@@ -34,7 +34,7 @@ public class MovieDao implements Dao<Movie> {
 	public void delete(Movie movie) {
 		if (movie.getId() > 0) {
 			String selection = Movies.MOVIE_ID + " = ?";
-			String[] selectionArgs = { String.valueOf(movie.getMovieId()) };
+			String[] selectionArgs = { String.valueOf(movie.getId()) };
 			db.delete(Movies.TABLE_NAME, selection, selectionArgs);
 		}
 	}
@@ -135,12 +135,12 @@ public class MovieDao implements Dao<Movie> {
 		if (c != null) {
 			m = new Movie();
 			m.setId(c.getLong(c.getColumnIndex(Movies._ID)));
-			m.setMovieId(c.getLong(c.getColumnIndex(Movies.MOVIE_ID)));
-			m.setOriginalTitle(c.getString(c.getColumnIndex(Movies.ORIGINAL_TITLE)));
+			m.setId(c.getLong(c.getColumnIndex(Movies.MOVIE_ID)));
+			m.setOriginal_title(c.getString(c.getColumnIndex(Movies.ORIGINAL_TITLE)));
 			m.setOverview(c.getString(c.getColumnIndex(Movies.OVERVIEW)));
 			m.setPopularity(c.getDouble(c.getColumnIndex(Movies.POPULARITY)));
-			m.setPosterPath(c.getString(c.getColumnIndex(Movies.POSTER_PATH)));
-			m.setReleaseDate(c.getString(c.getColumnIndex(Movies.RELEASE_DATE)));
+			m.setPoster_path(c.getString(c.getColumnIndex(Movies.POSTER_PATH)));
+			m.setRelease_date(c.getString(c.getColumnIndex(Movies.RELEASE_DATE)));
 		}
 		return m;
 	}

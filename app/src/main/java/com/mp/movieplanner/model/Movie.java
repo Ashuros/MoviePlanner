@@ -1,14 +1,17 @@
 package com.mp.movieplanner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie extends ModelBase {
 	
-	private long movieId;
-	private String originalTitle;
-	private String releaseDate;
-	private String posterPath;
+	private long id;
+	private String original_title;
+	private String release_date;
+	private String poster_path;
 	private double popularity;
 	private String overview;
 	private Set<Genre> genres;
@@ -16,142 +19,109 @@ public class Movie extends ModelBase {
 	public Movie() {
 		genres = new LinkedHashSet<>();
 	}
-			
-	public long getMovieId() {
-		return movieId;
-	}
 
-	public void setMovieId(long movieId) {
-		this.movieId = movieId;
-	}
+    @Override
+    public long getId() {
+        return id;
+    }
 
-	public String getOriginalTitle() {
-		return originalTitle;
-	}
-	
-	public void setOriginalTitle(String originalTitle) {
-		this.originalTitle = originalTitle;
-	}
-	
-	public String getReleaseDate() {
-		return releaseDate;
-	}
-	
-	public void setReleaseDate(String releaseDate) {
-		this.releaseDate = releaseDate;
-	}
-	
-	public String getPosterPath() {
-		return posterPath;
-	}
-	
-	public void setPosterPath(String posterPath) {
-		this.posterPath = posterPath;
-	}
-	
-	public double getPopularity() {
-		return popularity;
-	}
-	
-	public void setPopularity(double popularity) {
-		this.popularity = popularity;
-	}
-	
-	public String getOverview() {
-		return overview;
-	}
+    @Override
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setOverview(String overview) {
-		this.overview = overview;
-	}
+    public String getOriginal_title() {
+        return original_title;
+    }
 
-	public Set<Genre> getGenres() {
-		return genres;
-	}
+    public void setOriginal_title(String original_title) {
+        this.original_title = original_title;
+    }
 
-	public void setGenres(Set<Genre> genres) {
-		this.genres = genres;
-	}
-	
-	@Override
-	public String toString() {
-		return originalTitle;
-	}
+    public String getRelease_date() {
+        return release_date;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((genres == null) ? 0 : genres.hashCode());
-		result = prime * result + (int) (movieId ^ (movieId >>> 32));
-		result = prime * result
-				+ ((originalTitle == null) ? 0 : originalTitle.hashCode());
-		result = prime * result
-				+ ((overview == null) ? 0 : overview.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(popularity);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result
-				+ ((posterPath == null) ? 0 : posterPath.hashCode());
-		result = prime * result
-				+ ((releaseDate == null) ? 0 : releaseDate.hashCode());
-		return result;
-	}
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (!(obj instanceof Movie)) {
-			return false;
-		}
-		Movie other = (Movie) obj;
-		if (genres == null) {
-			if (other.genres != null) {
-				return false;
-			}
-		} else if (!genres.equals(other.genres)) {
-			return false;
-		}
-		if (movieId != other.movieId) {
-			return false;
-		}
-		if (originalTitle == null) {
-			if (other.originalTitle != null) {
-				return false;
-			}
-		} else if (!originalTitle.equals(other.originalTitle)) {
-			return false;
-		}
-		if (overview == null) {
-			if (other.overview != null) {
-				return false;
-			}
-		} else if (!overview.equals(other.overview)) {
-			return false;
-		}
-		if (Double.doubleToLongBits(popularity) != Double
-				.doubleToLongBits(other.popularity)) {
-			return false;
-		}
-		if (posterPath == null) {
-			if (other.posterPath != null) {
-				return false;
-			}
-		} else if (!posterPath.equals(other.posterPath)) {
-			return false;
-		}
-		if (releaseDate == null) {
-			if (other.releaseDate != null) {
-				return false;
-			}
-		} else if (!releaseDate.equals(other.releaseDate)) {
-			return false;
-		}
-		return true;
-	}
+    public String getPoster_path() {
+        return poster_path;
+    }
+
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
+    }
+
+    public double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
+    }
+
+    public String getOverview() {
+        return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Movie movie = (Movie) o;
+
+        if (id != movie.id) return false;
+        if (Double.compare(movie.popularity, popularity) != 0) return false;
+        if (!genres.equals(movie.genres)) return false;
+        if (!original_title.equals(movie.original_title)) return false;
+        if (!overview.equals(movie.overview)) return false;
+        if (!poster_path.equals(movie.poster_path)) return false;
+        if (!release_date.equals(movie.release_date)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        long temp;
+        result = 31 * result + (int) (id ^ (id >>> 32));
+        result = 31 * result + original_title.hashCode();
+        result = 31 * result + release_date.hashCode();
+        result = 31 * result + poster_path.hashCode();
+        temp = Double.doubleToLongBits(popularity);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + overview.hashCode();
+        result = 31 * result + genres.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", original_title='" + original_title + '\'' +
+                ", release_date='" + release_date + '\'' +
+                ", poster_path='" + poster_path + '\'' +
+                ", popularity=" + popularity +
+                ", overview='" + overview + '\'' +
+                ", genres=" + genres +
+                '}';
+    }
 }

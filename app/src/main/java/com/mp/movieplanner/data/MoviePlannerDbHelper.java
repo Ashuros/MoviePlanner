@@ -31,23 +31,14 @@ public class MoviePlannerDbHelper extends SQLiteOpenHelper {
 	public void onOpen(final SQLiteDatabase db) {
 		super.onOpen(db);
 		if (!db.isReadOnly()) {
-	         // versions of SQLite older than 3.6.19 don't support foreign keys
-	         // and neither do any version compiled with SQLITE_OMIT_FOREIGN_KEY
-	         // http://www.sqlite.org/foreignkeys.html#fk_enable
-	         // 
-	         // make sure foreign key support is turned on if it's there (should be already, just a double-checker)
 			db.execSQL("PRAGMA foreign_keys=ON;");
-	         // then we check to make sure they're on 
-	         // (if this returns no data they aren't even available, so we shouldn't even TRY to use them)
-			
+
 			Cursor c = db.rawQuery("PRAGMA foreign_keys", null);
 			if (c.moveToFirst()) {
 				int result = c.getInt(0);
 				Log.i(DB_INFO, "SQLite foreign key support (1 is on, 0 is off): " + result);				
 			} else {
-				// could use this approach in onCreate, and not rely on foreign keys it not available, etc.
 	            Log.i(DB_INFO, "SQLite foreign key support NOT AVAILABLE");
-	            // if you had to here you could fall back to triggers
 			}
 			
 	        if (!c.isClosed()) {
@@ -69,12 +60,12 @@ public class MoviePlannerDbHelper extends SQLiteOpenHelper {
 			new Thread( new Runnable() {
 				@Override
 				public void run() {
-					for (Genre genre : Utils.getTheMovieDBClient().findAllGenres()) {
+					for (Genre genre : Utils.getTheMovieDBClient().retrieveAllGenres()) {
 						genreDao.save(genre);
 					}
 				}				
 			}).start();
-		};
+		}
 	}
 	
 	@Override

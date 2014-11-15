@@ -1,13 +1,13 @@
 package com.mp.movieplanner;
 
 import android.app.Activity;
+import android.app.ListFragment;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -53,7 +53,6 @@ public class MovieListFragment extends ListFragment
         //setListAdapter(adapter);
         //setListAdapter(mAdapter);
         setRetainInstance(true);
-
     }
 
     @Override
@@ -91,21 +90,20 @@ public class MovieListFragment extends ListFragment
     }
 
     @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
+    public void onListItemClick(ListView listView, View view, int position, long id) {
         // Notify the parent activity of selected item
         if (mCallback != null) {
             // Set the item as checked to be highlighted when in two-pane layout
             Log.i("CHECKABLE", String.valueOf(position));
             //getListView().setItemChecked(position, true);
-            l.setItemChecked(position, true);
-            Cursor c = ((MovieCursorAdapter) l.getAdapter()).getCursor();
+            listView.setItemChecked(position, true);
+            Cursor c = ((MovieCursorAdapter) listView.getAdapter()).getCursor();
             c.moveToPosition(position);
             long movieId = c.getLong(c.getColumnIndex(Movies._ID));
             Log.i("DAMN IT!", movieId + "");
             mCallback.onMovieSelected(movieId);
         }
     }
-
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

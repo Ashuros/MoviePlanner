@@ -73,19 +73,7 @@ public class MoviesGenresDao {
 		String sql = "select " + "mg." + MoviesGenres.GENRE_ID + ", " + "g." + Genres.GENRE_NAME + " from " +
 				     MoviesGenres.TABLE_NAME + " mg " + ", " + Genres.TABLE_NAME + " g " + " where " +
 				     " mg. " + MoviesGenres.MOVIE_ID + " = ? and " + "mg." + MoviesGenres.GENRE_ID + " = " + "g." + Genres._ID;
-		
-		/*String sql = "select mg.genre_id, g.genre_name from " +
-					  "movies_genres mg, genres g where " +
-					  "mg.movie_id = ? and mg.genre_id = g._id";
-		
-		String sql = "select mg.genre_id,  g.genre_name " +
-				      "from movies_genres mg " +
-				      "JOIN genres g " +
-				      "ON g._id = mg.genre_id " +
-				      "WHERE mg.movie_id = ?;";
-		
-		String all = "select * from movies_genres where movie_id = ?";
-		*/
+        
 		Cursor c = db.rawQuery(sql, new String[] { String.valueOf(movieId) });
 		if (c.moveToFirst()) {
 			do {

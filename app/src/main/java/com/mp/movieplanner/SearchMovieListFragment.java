@@ -1,11 +1,11 @@
 package com.mp.movieplanner;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -101,7 +101,7 @@ public class SearchMovieListFragment extends ListFragment implements
         movieToAdd = (MovieSearchResult) parent.getItemAtPosition(position);
         DialogFragment dialog = AddMovieDialog.newInstance(movieToAdd.getTitle());
         dialog.setTargetFragment(this, 0);
-        dialog.show(getActivity().getSupportFragmentManager(), TAG_DIALOG);
+        dialog.show(getActivity().getFragmentManager(), TAG_DIALOG);
         return true;
     }
 
@@ -110,19 +110,35 @@ public class SearchMovieListFragment extends ListFragment implements
         new AddMovieToDatabase().execute(movieToAdd);
     }
 
+    @Override
+    public void onPause() {
+        Log.i(TAG, "onPause()");
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        Log.i(TAG, "onStop()");
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(TAG, "onDestroy()");
+    }
+
     private void showToast(int id) {
         Toast.makeText(getActivity(),
                 getString(id),
                 Toast.LENGTH_LONG).show();
     }
 
-    // Seperate task to add movie to database based on clicked Item on the List
-    // - movieToAdd
     private class AddMovieToDatabase extends AsyncTask<MovieSearchResult, Void, Long> {
         @Override
         protected Long doInBackground(MovieSearchResult... movies) {
             try {
-                return movieService.saveMovie(Utils.getTheMovieDBClient().find(movies[0].getId()));
+                return movieService.saveMovie(Utils.getTheMovieDBClient().findMovie(movies[0].getId()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -145,41 +161,32 @@ public class SearchMovieListFragment extends ListFragment implements
         @Override
         protected List<MovieSearchResult> doInBackground(String... query) {
             if (mApp.isConnectionPresent()) {
-                return Utils.getTheMovieDBClient().search(query[0]);
+                return Utils.getTheMovieDBClient().searchMovies(query[0]);
             }
             return Collections.emptyList();
         }
 
         @Override
         protected void onPostExecute(List<MovieSearchResult> movies) {
-            if (movies.size() > 0) {
+            if (movies.isEmpty()) {
+                showToast(R.string.search_error_retrieving_data);
+                ((Activity) mCallback).finish();
+            } else {
+                movies = filterMoviesNotPresentInDatabase(movies);
                 adapter.clear();
                 for (MovieSearchResult movie : movies) {
                     adapter.add(movie);
                 }
                 adapter.notifyDataSetChanged();
-            } else {
-                showToast(R.string.search_error_retrieving_data);
             }
         }
-    }
 
-    @Override
-    public void onPause() {
-        Log.i(TAG, "onPause()");
-        super.onPause();
+        private List<MovieSearchResult> filterMoviesNotPresentInDatabase(List<MovieSearchResult> movies) {
+            Log.i("movies", "movies: " + movies.toString());
+            List<MovieSearchResult> dbMovies = Utils.toMovieSearchResult(movieService.getAllMovies());
+            Log.i("movies", "dbMovies: " + dbMovies.toString());
+            movies.removeAll(dbMovies);
+            return movies;
+        }
     }
-
-    @Override
-    public void onStop() {
-        Log.i(TAG, "onStop()");
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "onDestroy()");
-    }
-
 }
