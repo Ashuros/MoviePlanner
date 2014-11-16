@@ -16,9 +16,9 @@ public class DownloadListItemTask extends DownloadTask {
 	
 	@Override
 	protected void onPostExecute(Bitmap bitmap) {
-		long forPosition = (long) mImageView.getTag();
+		long forPosition = (long) imageView.getTag();
 		if (forPosition == mId && bitmap != null) {
-			mImageView.setImageBitmap(bitmap);
+			imageView.setImageBitmap(bitmap);
 		}
 	}
 }

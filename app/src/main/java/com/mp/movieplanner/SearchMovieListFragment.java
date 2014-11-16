@@ -171,20 +171,18 @@ public class SearchMovieListFragment extends ListFragment implements
             if (movies.isEmpty()) {
                 showToast(R.string.search_error_retrieving_data);
                 ((Activity) mCallback).finish();
-            } else {
-                movies = filterMoviesNotPresentInDatabase(movies);
-                adapter.clear();
-                for (MovieSearchResult movie : movies) {
-                    adapter.add(movie);
-                }
-                adapter.notifyDataSetChanged();
+                return;
             }
+            movies = filterMoviesNotPresentInDatabase(movies);
+            adapter.clear();
+            for (MovieSearchResult movie : movies) {
+                adapter.add(movie);
+            }
+            adapter.notifyDataSetChanged();
         }
 
         private List<MovieSearchResult> filterMoviesNotPresentInDatabase(List<MovieSearchResult> movies) {
-            Log.i("movies", "movies: " + movies.toString());
             List<MovieSearchResult> dbMovies = Utils.toMovieSearchResult(movieService.getAllMovies());
-            Log.i("movies", "dbMovies: " + dbMovies.toString());
             movies.removeAll(dbMovies);
             return movies;
         }

@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 public class MovieDetailsFragment extends Fragment {
 	final static String ARG_POSITION = "position";
-	private int mCurrentPosition = -1;
+	private long currentMoviePosition = -1;
 	
 	private MoviePlannerApp app;
 	
@@ -30,13 +30,12 @@ public class MovieDetailsFragment extends Fragment {
 	private TextView genres;
 	
 	@Override
-	public View onCreateView(LayoutInflater infalter, ViewGroup container,
-			Bundle savedInstanceState) {		
+	public View onCreateView(LayoutInflater infalter, ViewGroup container, Bundle savedInstanceState) {
 		if (savedInstanceState != null) {
-			mCurrentPosition = savedInstanceState.getInt(ARG_POSITION);
+			currentMoviePosition = savedInstanceState.getLong(ARG_POSITION);
+            Log.i("CURRENT_POS", ""+ currentMoviePosition);
 		}
-		
-		return infalter.inflate(R.layout.movie_view, container, false);
+		return infalter.inflate(R.layout.movie_details_fragment, container, false);
 	}
 	
 	@Override
@@ -54,13 +53,13 @@ public class MovieDetailsFragment extends Fragment {
 	@Override
 	public void onStart() {
 		super.onStart();
-		
-		if (mCurrentPosition != -1) {
-			updateMovieView(mCurrentPosition);
+		if (currentMoviePosition != -1) {
+			updateMovieView(currentMoviePosition);
 		}
 	}
 	
 	public void updateMovieView(long position){
+        currentMoviePosition = position;
 		Movie movie = app.getMovieService().getMovie(position);
 		Log.i("UPDATE_MOVIE_VIEW", movie.toString());
 		image.setTag(position);
@@ -79,8 +78,8 @@ public class MovieDetailsFragment extends Fragment {
 	
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		
+        Log.i("CURRENT_POS", "onSaveInstanceState() " + currentMoviePosition);
         // Save the current article selection in case we need to recreate the fragment
-		outState.putInt(ARG_POSITION, mCurrentPosition);
+		outState.putLong(ARG_POSITION, currentMoviePosition);
 	}
 }

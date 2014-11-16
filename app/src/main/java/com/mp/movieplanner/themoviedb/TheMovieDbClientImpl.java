@@ -35,11 +35,13 @@ public class TheMovieDbClientImpl implements TheMovieDbClient {
         return response.getResults();
     }
 
+    @Override
     public Movie findMovie(String id) {
-        Log.i(THE_MOVIE_DB_CLIENT_TAG, "Trying to find id: " + id);
+        Log.i(THE_MOVIE_DB_CLIENT_TAG, "Query for: " + id);
         return restTemplate.getForObject(FIND_FEED_URL, Movie.class, id);
     }
 
+    @Override
     public Set<Genre> retrieveAllGenres() {
         Log.i(THE_MOVIE_DB_CLIENT_TAG, "Downloading all genres");
         GenreResultResponse genres =  restTemplate.getForObject(TheMovieDbURL.GET_GENRES, GenreResultResponse.class, "");

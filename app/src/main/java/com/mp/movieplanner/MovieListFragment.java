@@ -125,19 +125,19 @@ public class MovieListFragment extends ListFragment
         mAdapter.swapCursor(null);
     }
 
-	
+
 
 /*	// Fill movie list from database in seperate thread (Prevent ANR - Activity Not Responding).
-	private class GetMoviesTask extends AsyncTask<Void, Void, List<Movie>> {		
+	private class GetMoviesTask extends AsyncTask<Void, Void, List<Movie>> {
 		@Override
-		protected List<Movie> doInBackground(Void... search) {			
+		protected List<Movie> doInBackground(Void... search) {
 			return movieService.getAllMovies();
 		}
-		
+
 		@Override
 		protected void onPostExecute(List<Movie> movies) {
 			if (movies != null) {
-				adapter.clear();			
+				adapter.clear();
 				for (Movie m : movies) {
 					adapter.add(m);
 				}

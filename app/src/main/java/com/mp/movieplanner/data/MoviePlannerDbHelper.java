@@ -26,7 +26,6 @@ public class MoviePlannerDbHelper extends SQLiteOpenHelper {
 		this.ctx = context;
 	}
 	
-	//Android calls callback methods 
 	@Override
 	public void onOpen(final SQLiteDatabase db) {
 		super.onOpen(db);
@@ -70,8 +69,7 @@ public class MoviePlannerDbHelper extends SQLiteOpenHelper {
 	
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		Log.i(DB_INFO, "SQLiteOpenHelper onUpgrade - oldVersion:" + oldVersion + " newVersion:"
-                + newVersion);
+		Log.i(DB_INFO, "SQLiteOpenHelper onUpgrade - oldVersion:" + oldVersion + " newVersion:" + newVersion);
 		MoviesGenres.onUpgrade(db, oldVersion, newVersion);
 		Movies.onUpgrade(db, oldVersion, newVersion);
 		Genres.onUpgrade(db, oldVersion, newVersion);	

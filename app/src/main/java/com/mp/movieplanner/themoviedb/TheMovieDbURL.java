@@ -12,4 +12,10 @@ public final class TheMovieDbURL {
     static final String FIND_FEED_URL = "http://api.themoviedb.org/3/movie/{id}?" + API_KEY;
 
     static final String GET_GENRES = "http://api.themoviedb.org/3/genre/movie/list?" + API_KEY;
+
+    public static final String IMAGE_URL = "http://image.tmdb.org/t/p/";
+
+    public static final String IMAGE_SIZE_W92 = "w92/";
+
+    public static final String IMAGE_SIZE_W154 = "w154/";
 }
