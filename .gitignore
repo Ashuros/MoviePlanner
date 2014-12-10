@@ -4,6 +4,7 @@ gradle/
 app/build/
 build/
 app/app.iml
+MoviePlanner.iml
 
 # Built application files
 *.apk
@@ -31,7 +32,5 @@ proguard/
 
 # Log Files
 *.log
-
-
 
 *.iml/

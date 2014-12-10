@@ -48,7 +48,6 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
             detailsFrag = new MovieDetailsFragment();
             FragmentTransaction t = fm.beginTransaction();
             t.replace(R.id.fragment_container, detailsFrag);
-            fm.executePendingTransactions();
             t.addToBackStack(null);
             t.commit();
             fm.executePendingTransactions();

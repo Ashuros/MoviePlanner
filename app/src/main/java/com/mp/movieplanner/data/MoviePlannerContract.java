@@ -46,8 +46,8 @@ public final class MoviePlannerContract {
     	
     	private static final String SQL_CREATE_CATEGORIES =
     			"CREATE TABLE " + Genres.TABLE_NAME + " (" + 
-    		    Genres._ID + " INTEGER PRIMARY KEY," + 
-    			Genres.GENRE_ID + " INTEGER, " +		
+    		    Genres._ID + " INTEGER PRIMARY KEY," +
+    			Genres.GENRE_ID + " INTEGER, " +
     			Genres.GENRE_NAME + " TEXT UNIQUE NOT NULL" + ");";
     	
     	private static final String SQL_DELETE_GENRES = 
