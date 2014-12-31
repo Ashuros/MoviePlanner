@@ -32,4 +32,5 @@ android {
 dependencies {
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.4.3'
+    compile 'com.android.support:support-v13:21.0.2'
 }
