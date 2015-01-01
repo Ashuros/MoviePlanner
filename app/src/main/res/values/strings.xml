@@ -19,5 +19,8 @@
 
 
     <string name="image_details_description">This image shows a movie poster</string>
+
+    <string name="movie_tab">Movies</string>
+    <string name="tv_tab">TV</string>
 	
 </resources>
