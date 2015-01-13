@@ -8,9 +8,7 @@ public class MovieSearchResult {
 	private String id;
 	private String title;
 
-    public MovieSearchResult() {
-
-    }
+    public MovieSearchResult() {}
 
     public MovieSearchResult(String id, String title) {
         this.id = id;
@@ -41,16 +39,13 @@ public class MovieSearchResult {
         MovieSearchResult that = (MovieSearchResult) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override

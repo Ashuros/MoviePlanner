@@ -1,4 +1,4 @@
-package com.mp.movieplanner.util;
+package com.mp.movieplanner.common;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

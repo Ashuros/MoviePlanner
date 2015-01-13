@@ -42,7 +42,7 @@ public class TheMovieDbClientImpl implements TheMovieDbClient {
     }
 
     @Override
-    public Set<Genre> retrieveAllGenres() {
+    public Set<Genre> retrieveMovieGenres() {
         Log.i(THE_MOVIE_DB_CLIENT_TAG, "Downloading all genres");
         GenreResultResponse genres =  restTemplate.getForObject(TheMovieDbURL.GET_GENRES, GenreResultResponse.class, "");
         return genres.getGenres();

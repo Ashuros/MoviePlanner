@@ -1,6 +1,6 @@
 package com.mp.movieplanner.data.service;
 
-public interface Service {
+public interface Service<T> {
 
     public boolean isOpen();
 

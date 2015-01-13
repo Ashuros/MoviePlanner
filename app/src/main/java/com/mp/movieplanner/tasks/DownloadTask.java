@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import com.mp.movieplanner.themoviedb.TheMovieDbURL;
-import com.mp.movieplanner.util.ImageCache;
+import com.mp.movieplanner.common.ImageCache;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

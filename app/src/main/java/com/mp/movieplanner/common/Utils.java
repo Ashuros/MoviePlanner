@@ -1,4 +1,4 @@
-package com.mp.movieplanner.util;
+package com.mp.movieplanner.common;
 
 import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.model.MovieSearchResult;
@@ -19,7 +19,7 @@ public class Utils {
         List<MovieSearchResult> movieSearchResults = new ArrayList<>(movies.size());
 
         for (Movie movie : movies) {
-            String id = String.valueOf(movie.getId());
+            String id = String.valueOf(movie.getMovieId());
             String title = movie.getOriginal_title();
             movieSearchResults.add(new MovieSearchResult(id, title));
         }

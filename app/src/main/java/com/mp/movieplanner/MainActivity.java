@@ -21,8 +21,6 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
 
     private MoviePlannerApp app;
 
-    private FragmentManager fm;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +28,6 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
 
         app = (MoviePlannerApp) getApplication();
 
-        fm = getFragmentManager();
         SwipeViewAdapter swipeAdapter = new SwipeViewAdapter(getFragmentManager());
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(swipeAdapter);

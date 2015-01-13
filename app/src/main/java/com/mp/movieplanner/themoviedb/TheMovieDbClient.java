@@ -11,5 +11,5 @@ public interface TheMovieDbClient {
 	
 	public List<MovieSearchResult> searchMovies(String searchString);
 	public Movie findMovie(String id) throws IOException;
-	public Set<Genre> retrieveAllGenres();
+	public Set<Genre> retrieveMovieGenres();
 }

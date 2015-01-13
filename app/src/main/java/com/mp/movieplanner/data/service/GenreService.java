@@ -4,7 +4,7 @@ import com.mp.movieplanner.model.Genre;
 
 import java.util.List;
 
-public interface GenreService extends Service {
+public interface GenreService extends Service<Genre> {
 
     public long saveGenre(Genre genre);
 

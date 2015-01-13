@@ -1,5 +1,7 @@
 package com.mp.movieplanner.data.dao;
 
+import android.database.Cursor;
+
 import java.util.List;
 
 public interface Dao<T> {
@@ -11,5 +13,7 @@ public interface Dao<T> {
 	T get(long id);
 	
 	List<T> getAll();
+
+    Cursor getAllCursor();
 
 }

@@ -1,4 +1,4 @@
-package com.mp.movieplanner.data.dao;
+package com.mp.movieplanner.data.dao.movie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +7,15 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.mp.movieplanner.data.MovieContract;
+import com.mp.movieplanner.data.dao.Dao;
 import com.mp.movieplanner.model.Movie;
-import com.mp.movieplanner.data.MoviePlannerContract.Movies;
+import com.mp.movieplanner.data.MovieContract.Movies;
 
 public class MovieDao implements Dao<Movie> {
-	
+
+    private static String TAG = MovieDao.class.getSimpleName();
+
 	private SQLiteDatabase db;
 	
 	public MovieDao(SQLiteDatabase db) {
@@ -21,7 +25,7 @@ public class MovieDao implements Dao<Movie> {
 	@Override
 	public long save(Movie movie) {
 		ContentValues values = new ContentValues();
-		values.put(Movies.MOVIE_ID, movie.getId());
+		values.put(Movies.MOVIE_ID, movie.getMovieId());
 		values.put(Movies.ORIGINAL_TITLE, movie.getOriginal_title());
 		values.put(Movies.RELEASE_DATE, movie.getRelease_date());
 		values.put(Movies.POSTER_PATH, movie.getPoster_path());
@@ -33,7 +37,7 @@ public class MovieDao implements Dao<Movie> {
 	@Override
 	public void delete(Movie movie) {
 		if (movie.getId() > 0) {
-			String selection = Movies.MOVIE_ID + " = ?";
+			String selection = Movies._ID + " = ?";
 			String[] selectionArgs = { String.valueOf(movie.getId()) };
 			db.delete(Movies.TABLE_NAME, selection, selectionArgs);
 		}
@@ -99,8 +103,13 @@ public class MovieDao implements Dao<Movie> {
 		
 		return movies;
 	}
-	
-	public Movie find(String name) {
+
+    @Override
+    public Cursor getAllCursor() {
+        return db.rawQuery("SELECT * FROM " + Movies.TABLE_NAME, null);
+    }
+
+    public Movie find(String name) {
 		Movie movie = null;
 		
 		String selection = "UPPER(" + Movies.ORIGINAL_TITLE + ") LIKE ?";
@@ -135,7 +144,7 @@ public class MovieDao implements Dao<Movie> {
 		if (c != null) {
 			m = new Movie();
 			m.setId(c.getLong(c.getColumnIndex(Movies._ID)));
-			m.setId(c.getLong(c.getColumnIndex(Movies.MOVIE_ID)));
+			m.setMovieId(c.getLong(c.getColumnIndex(Movies.MOVIE_ID)));
 			m.setOriginal_title(c.getString(c.getColumnIndex(Movies.ORIGINAL_TITLE)));
 			m.setOverview(c.getString(c.getColumnIndex(Movies.OVERVIEW)));
 			m.setPopularity(c.getDouble(c.getColumnIndex(Movies.POPULARITY)));

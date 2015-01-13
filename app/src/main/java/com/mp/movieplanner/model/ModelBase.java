@@ -17,7 +17,7 @@ public class ModelBase {
 	}
 	
 	@Override
-	public int hashCode() {
+	public final int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (int) (this.id ^ (this.id >>> 32));
@@ -25,7 +25,7 @@ public class ModelBase {
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
+	public final boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}

@@ -1,6 +1,7 @@
 package com.mp.movieplanner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -8,7 +9,7 @@ import java.util.Set;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Movie extends ModelBase {
 	
-	private long id;
+	private long movieId;
 	private String original_title;
 	private String release_date;
 	private String poster_path;
@@ -20,14 +21,13 @@ public class Movie extends ModelBase {
 		genres = new LinkedHashSet<>();
 	}
 
-    @Override
-    public long getId() {
-        return id;
+    public long getMovieId() {
+        return movieId;
     }
 
-    @Override
-    public void setId(long id) {
-        this.id = id;
+    @JsonProperty("id")
+    public void setMovieId(long movieId) {
+        this.movieId = movieId;
     }
 
     public String getOriginal_title() {
@@ -79,43 +79,9 @@ public class Movie extends ModelBase {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Movie movie = (Movie) o;
-
-        if (id != movie.id) return false;
-        if (Double.compare(movie.popularity, popularity) != 0) return false;
-        if (!genres.equals(movie.genres)) return false;
-        if (!original_title.equals(movie.original_title)) return false;
-        if (!overview.equals(movie.overview)) return false;
-        if (!poster_path.equals(movie.poster_path)) return false;
-        if (!release_date.equals(movie.release_date)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        long temp;
-        result = 31 * result + (int) (id ^ (id >>> 32));
-        result = 31 * result + original_title.hashCode();
-        result = 31 * result + release_date.hashCode();
-        result = 31 * result + poster_path.hashCode();
-        temp = Double.doubleToLongBits(popularity);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + overview.hashCode();
-        result = 31 * result + genres.hashCode();
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "Movie{" +
-                "id=" + id +
+                "movieId=" + movieId +
                 ", original_title='" + original_title + '\'' +
                 ", release_date='" + release_date + '\'' +
                 ", poster_path='" + poster_path + '\'' +

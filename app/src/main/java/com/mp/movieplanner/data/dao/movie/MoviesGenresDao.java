@@ -1,11 +1,11 @@
-package com.mp.movieplanner.data.dao;
+package com.mp.movieplanner.data.dao.movie;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mp.movieplanner.data.MovieContract;
 import com.mp.movieplanner.data.MovieGenreKey;
-import com.mp.movieplanner.data.MoviePlannerContract.Genres;
-import com.mp.movieplanner.data.MoviePlannerContract.MoviesGenres;
+import com.mp.movieplanner.data.MovieContract.MoviesGenres;
 import com.mp.movieplanner.model.Genre;
 
 import android.content.ContentValues;
@@ -29,7 +29,7 @@ public class MoviesGenresDao {
 	}
 	
 	public void delete(MovieGenreKey key) {
-		if ((key.getMovieId()) > 0 && (key.getGenreId() > 0)) {
+		if ((key.getMovieId() > 0) && (key.getGenreId() > 0)) {
 			
 			String selection = MoviesGenres.MOVIE_ID + " = ? and " +
 							   MoviesGenres.GENRE_ID + " = ? ";
@@ -60,7 +60,7 @@ public class MoviesGenresDao {
 		);
 		
 		if (c.moveToFirst()) {
-			result = true; // don't just "return true" here, or Cursor won't get closed
+			result = true;
 		}		
 		if (!c.isClosed()) {
 			c.close();
@@ -68,11 +68,11 @@ public class MoviesGenresDao {
 		return result;					
 	}
 	
-	public List<Genre> getGenres(long movieId) {
+	public List<Genre> getGenresForMovieId(long movieId) {
 		List<Genre> list = new ArrayList<>();		
-		String sql = "select " + "mg." + MoviesGenres.GENRE_ID + ", " + "g." + Genres.GENRE_NAME + " from " +
-				     MoviesGenres.TABLE_NAME + " mg " + ", " + Genres.TABLE_NAME + " g " + " where " +
-				     " mg. " + MoviesGenres.MOVIE_ID + " = ? and " + "mg." + MoviesGenres.GENRE_ID + " = " + "g." + Genres._ID;
+		String sql = "select " + "mg." + MoviesGenres.GENRE_ID + ", " + "g." + MovieContract.GenresMovie.GENRE_NAME + " from " +
+				     MoviesGenres.TABLE_NAME + " mg " + ", " + MovieContract.GenresMovie.TABLE_NAME + " g " + " where " +
+				     " mg. " + MoviesGenres.MOVIE_ID + " = ? and " + "mg." + MoviesGenres.GENRE_ID + " = " + "g." + MovieContract.GenresMovie._ID;
         
 		Cursor c = db.rawQuery(sql, new String[] { String.valueOf(movieId) });
 		if (c.moveToFirst()) {

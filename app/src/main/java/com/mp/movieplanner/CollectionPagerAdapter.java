@@ -16,7 +16,7 @@ public class CollectionPagerAdapter extends FragmentPagerAdapter {
         super(fm);
         fragments = new ArrayList<>();
         fragments.add(new MovieListFragment());
-        fragments.add(new MovieListFragment());
+        fragments.add(new TvListFragment());
     }
 
     @Override

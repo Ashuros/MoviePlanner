@@ -7,12 +7,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.mp.movieplanner.MoviePlannerApp;
-import com.mp.movieplanner.data.MoviePlannerContract.Genres;
-import com.mp.movieplanner.data.MoviePlannerContract.Movies;
-import com.mp.movieplanner.data.MoviePlannerContract.MoviesGenres;
-import com.mp.movieplanner.data.dao.GenreDao;
+import com.mp.movieplanner.data.MovieContract.Movies;
+import com.mp.movieplanner.data.MovieContract.MoviesGenres;
+import com.mp.movieplanner.data.dao.movie.GenreDao;
 import com.mp.movieplanner.model.Genre;
-import com.mp.movieplanner.util.Utils;
+import com.mp.movieplanner.common.Utils;
+
+import static com.mp.movieplanner.data.TvContract.Tv;
+import static com.mp.movieplanner.data.TvContract.TvGenres;
 
 public class MoviePlannerDbHelper extends SQLiteOpenHelper {
 	public static final String DB_INFO = "DB_INFO";
@@ -49,11 +51,17 @@ public class MoviePlannerDbHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		Log.i(DB_INFO, "Creating database " + DATABASE_NAME);
-		Genres.onCreate(db);				
+		MovieContract.GenresMovie.onCreate(db);
 		Movies.onCreate(db);
 		MoviesGenres.onCreate(db);
 
-        initGenres(db);
+        initMovieGenres(db);
+
+        TvContract.GenresTv.onCreate(db);
+        Tv.onCreate(db);
+        TvGenres.onCreate(db);
+
+
 	}
 	
 	@Override
@@ -61,16 +69,16 @@ public class MoviePlannerDbHelper extends SQLiteOpenHelper {
 		Log.i(DB_INFO, "SQLiteOpenHelper onUpgrade - oldVersion:" + oldVersion + " newVersion:" + newVersion);
 		MoviesGenres.onUpgrade(db, oldVersion, newVersion);
 		Movies.onUpgrade(db, oldVersion, newVersion);
-		Genres.onUpgrade(db, oldVersion, newVersion);	
+		MovieContract.GenresMovie.onUpgrade(db, oldVersion, newVersion);
 	}
 
-    private void initGenres(SQLiteDatabase db) {
+    private void initMovieGenres(SQLiteDatabase db) {
         if (((MoviePlannerApp)ctx).isConnectionPresent()) {
             final GenreDao genreDao = new GenreDao(db);
             new Thread( new Runnable() {
                 @Override
                 public void run() {
-                    for (Genre genre : Utils.getTheMovieDBClient().retrieveAllGenres()) {
+                    for (Genre genre : Utils.getTheMovieDBClient().retrieveMovieGenres()) {
                         genreDao.save(genre);
                     }
                 }

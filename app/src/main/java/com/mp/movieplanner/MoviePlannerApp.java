@@ -8,13 +8,16 @@ import android.net.NetworkInfo.State;
 
 import com.mp.movieplanner.data.service.GenreService;
 import com.mp.movieplanner.data.service.MovieService;
+import com.mp.movieplanner.data.service.TvService;
 import com.mp.movieplanner.data.service.impl.GenreServiceImpl;
 import com.mp.movieplanner.data.service.impl.MovieServiceImpl;
-import com.mp.movieplanner.util.ImageCache;
+import com.mp.movieplanner.common.ImageCache;
+import com.mp.movieplanner.data.service.impl.TvServiceImpl;
 
 public class MoviePlannerApp extends Application {
 
     private MovieService movieService;
+    private TvService tvService;
     private GenreService genreService;
 
     private ConnectivityManager cMgr;
@@ -22,6 +25,10 @@ public class MoviePlannerApp extends Application {
 
     public MovieService getMovieService() {
         return movieService;
+    }
+
+    public TvService getTvService() {
+        return tvService;
     }
 
     public GenreService getGenreService() {
@@ -37,6 +44,7 @@ public class MoviePlannerApp extends Application {
         super.onCreate();
         cMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         movieService = new MovieServiceImpl(this);
+        tvService = new TvServiceImpl(this);
         genreService = new GenreServiceImpl(this);
         mCache = new ImageCache();
     }

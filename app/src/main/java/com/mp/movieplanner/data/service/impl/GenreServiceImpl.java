@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.mp.movieplanner.data.MoviePlannerDbHelper;
-import com.mp.movieplanner.data.dao.GenreDao;
-import com.mp.movieplanner.data.dao.MovieDao;
-import com.mp.movieplanner.data.dao.MoviesGenresDao;
+import com.mp.movieplanner.data.dao.movie.GenreDao;
+import com.mp.movieplanner.data.dao.movie.MovieDao;
+import com.mp.movieplanner.data.dao.movie.MoviesGenresDao;
 import com.mp.movieplanner.data.service.GenreService;
 import com.mp.movieplanner.model.Genre;
 

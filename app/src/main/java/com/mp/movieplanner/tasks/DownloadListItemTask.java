@@ -3,7 +3,7 @@ package com.mp.movieplanner.tasks;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
-import com.mp.movieplanner.util.ImageCache;
+import com.mp.movieplanner.common.ImageCache;
 
 public class DownloadListItemTask extends DownloadTask {
 

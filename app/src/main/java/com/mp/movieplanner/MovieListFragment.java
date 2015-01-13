@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-import com.mp.movieplanner.data.MoviePlannerContract.Movies;
+import com.mp.movieplanner.data.MovieContract.Movies;
 import com.mp.movieplanner.data.service.MovieService;
 
 public class MovieListFragment extends ListFragment
@@ -139,7 +139,7 @@ public class MovieListFragment extends ListFragment
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         Log.i(TAG, "onDestroy()");
+        super.onDestroy();
     }
 }

@@ -15,8 +15,9 @@ import android.widget.Toast;
 
 import com.mp.movieplanner.data.service.MovieService;
 import com.mp.movieplanner.dialog.AddMovieDialog;
+import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.model.MovieSearchResult;
-import com.mp.movieplanner.util.Utils;
+import com.mp.movieplanner.common.Utils;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -25,7 +26,7 @@ import java.util.List;
 public class SearchMovieListFragment extends ListFragment implements
         OnItemLongClickListener, AddMovieDialog.NoticeDialogListener {
 
-    public static final String TAG = "MOVIE_LIST_FRAG";
+    public static final String TAG = SearchMovieListFragment.class.getSimpleName();
 
     private static final String TAG_DIALOG = "ADD_DIALOG_TAG";
 
@@ -131,7 +132,7 @@ public class SearchMovieListFragment extends ListFragment implements
     private void showToast(int id) {
         Toast.makeText(getActivity(),
                 getString(id),
-                Toast.LENGTH_LONG).show();
+                Toast.LENGTH_SHORT).show();
     }
 
     private class AddMovieToDatabase extends AsyncTask<MovieSearchResult, Void, Long> {
@@ -182,7 +183,10 @@ public class SearchMovieListFragment extends ListFragment implements
         }
 
         private List<MovieSearchResult> filterMoviesNotPresentInDatabase(List<MovieSearchResult> movies) {
-            List<MovieSearchResult> dbMovies = Utils.toMovieSearchResult(movieService.getAllMovies());
+            Log.d(TAG, movies.toString());
+            List<Movie> allMovies = movieService.getAllMovies();
+            List<MovieSearchResult> dbMovies = Utils.toMovieSearchResult(allMovies);
+            Log.d(TAG, dbMovies.toString());
             movies.removeAll(dbMovies);
             return movies;
         }

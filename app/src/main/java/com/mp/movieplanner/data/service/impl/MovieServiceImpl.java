@@ -8,11 +8,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.mp.movieplanner.data.MovieGenreKey;
-import com.mp.movieplanner.data.MoviePlannerContract.Movies;
+import com.mp.movieplanner.data.MovieContract.Movies;
 import com.mp.movieplanner.data.MoviePlannerDbHelper;
-import com.mp.movieplanner.data.dao.GenreDao;
-import com.mp.movieplanner.data.dao.MovieDao;
-import com.mp.movieplanner.data.dao.MoviesGenresDao;
+import com.mp.movieplanner.data.dao.movie.GenreDao;
+import com.mp.movieplanner.data.dao.movie.MovieDao;
+import com.mp.movieplanner.data.dao.movie.MoviesGenresDao;
 import com.mp.movieplanner.data.service.MovieService;
 import com.mp.movieplanner.model.Genre;
 import com.mp.movieplanner.model.Movie;
@@ -54,7 +54,7 @@ public class MovieServiceImpl implements MovieService {
         Log.i(DB_INFO, "Getting movie " + id);
         Movie movie = movieDao.get(id);
         if (movie != null) {
-            movie.getGenres().addAll(moviesGenresDao.getGenres(movie.getId()));
+            movie.getGenres().addAll(moviesGenresDao.getGenresForMovieId(movie.getId()));
         }
         return movie;
     }
@@ -67,7 +67,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Cursor getMovieCursor() {
-        return db.rawQuery("SELECT * FROM " + Movies.TABLE_NAME, null);
+        return movieDao.getAllCursor();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class MovieServiceImpl implements MovieService {
         Log.i(DB_INFO, "Finding movie " + name);
         Movie movie = movieDao.find(name);
         if (movie != null) {
-            movie.getGenres().addAll(moviesGenresDao.getGenres(movie.getId()));
+            movie.getGenres().addAll(moviesGenresDao.getGenresForMovieId(movie.getId()));
         }
         return movie;
     }

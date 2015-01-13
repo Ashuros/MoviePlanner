@@ -6,7 +6,7 @@ import com.mp.movieplanner.model.Movie;
 
 import java.util.List;
 
-public interface MovieService extends Service {
+public interface MovieService extends Service<Movie> {
 
     public long saveMovie(Movie movie);
 

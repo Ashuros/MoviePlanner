@@ -3,10 +3,10 @@ package com.mp.movieplanner.data;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
 
-public final class MoviePlannerContract {
+public final class MovieContract {
 
-	public MoviePlannerContract() {}
-	
+	public MovieContract() {}
+
     public static abstract class Movies implements BaseColumns {
         public static final String TABLE_NAME ="movies";
     	public static final String MOVIE_ID = "movie_id";
@@ -38,26 +38,26 @@ public final class MoviePlannerContract {
     		onCreate(db);
     	}               
     }
-    
-    public static abstract class Genres implements BaseColumns {
-    	public static final String TABLE_NAME = "genres";
+
+    public static abstract class GenresMovie implements BaseColumns {
+    	public static final String TABLE_NAME = "genres_movie";
     	public static final String GENRE_ID = "genre_id";
     	public static final String GENRE_NAME = "genre_name";
-    	
+
     	private static final String SQL_CREATE_CATEGORIES =
-    			"CREATE TABLE " + Genres.TABLE_NAME + " (" + 
-    		    Genres._ID + " INTEGER PRIMARY KEY," +
-    			Genres.GENRE_ID + " INTEGER, " +
-    			Genres.GENRE_NAME + " TEXT UNIQUE NOT NULL" + ");";
-    	
-    	private static final String SQL_DELETE_GENRES = 
-    			"DROP TABLE IF EXISTS " + Genres.TABLE_NAME;
-    	
-    	
+    			"CREATE TABLE " + GenresMovie.TABLE_NAME + " (" +
+    		    GenresMovie._ID + " INTEGER PRIMARY KEY," +
+    			GenresMovie.GENRE_ID + " INTEGER, " +
+    			GenresMovie.GENRE_NAME + " TEXT UNIQUE NOT NULL" + ");";
+
+    	private static final String SQL_DELETE_GENRES =
+    			"DROP TABLE IF EXISTS " + GenresMovie.TABLE_NAME;
+
+
     	public static void onCreate(SQLiteDatabase db) {
     		db.execSQL(SQL_CREATE_CATEGORIES);
     	}
-    	
+
     	public static void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     		db.execSQL(SQL_DELETE_GENRES);
     		onCreate(db);
@@ -74,7 +74,7 @@ public final class MoviePlannerContract {
     			MOVIE_ID + " INTEGER NOT NULL, " +
     			GENRE_ID + " INTEGER NOT NULL, " +
     			"FOREIGN KEY(" + MOVIE_ID + ") REFERENCES " + Movies.TABLE_NAME + "(" + Movies._ID + ")," +
-    			"FOREIGN KEY(" + GENRE_ID + ") REFERENCES " + Genres.TABLE_NAME + "(" + Genres._ID + "), " +
+    			"FOREIGN KEY(" + GENRE_ID + ") REFERENCES " + GenresMovie.TABLE_NAME + "(" + GenresMovie._ID + "), " +
     			"PRIMARY KEY (" + MOVIE_ID + "," + GENRE_ID + ")" +
     			");";
     	
