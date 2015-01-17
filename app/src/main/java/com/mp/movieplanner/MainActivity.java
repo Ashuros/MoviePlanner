@@ -2,24 +2,28 @@ package com.mp.movieplanner;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements MovieListFragment.OnMovieSelectedListener {
+import com.mp.movieplanner.common.CollectionType;
+
+public class MainActivity extends Activity implements MovieListFragment.OnMovieSelectedListener, TvListFragment.OnTvSelectedListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
     private static final String TAG_MOVIE_LIST = "movie_list";
 
     private MoviePlannerApp app;
+
+    private CollectionType type;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,13 +32,16 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
 
         app = (MoviePlannerApp) getApplication();
 
-        SwipeViewAdapter swipeAdapter = new SwipeViewAdapter(getFragmentManager());
+        CollectionPagerAdapter swipeAdapter = new CollectionPagerAdapter(getFragmentManager());
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(swipeAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 getActionBar().setSelectedNavigationItem(position);
+                type = CollectionType.valueOf(position);
+                app.setType(type);
+                Log.d(TAG, type.toString());
             }
         });
 
@@ -58,12 +65,12 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
         };
 
         actionBar.addTab(actionBar.newTab()
-                                  .setText(R.string.movie_tab)
-                                  .setTabListener(tabListener));
+                .setText(R.string.movie_tab)
+                .setTabListener(tabListener));
 
         actionBar.addTab(actionBar.newTab()
-                                  .setText(R.string.tv_tab)
-                                  .setTabListener(tabListener));
+                .setText(R.string.tv_tab)
+                .setTabListener(tabListener));
     }
 
     @Override
@@ -78,6 +85,11 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
 //            fm.executePendingTransactions();
 //        }
 //        detailsFrag.updateMovieView(position);
+    }
+
+    @Override
+    public void onTvSelected(long position) {
+
     }
 
 
@@ -110,4 +122,6 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
         });
         return true;
     }
+
+
 }

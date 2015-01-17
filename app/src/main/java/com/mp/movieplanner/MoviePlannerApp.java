@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 
+import com.mp.movieplanner.common.CollectionType;
 import com.mp.movieplanner.data.service.GenreService;
 import com.mp.movieplanner.data.service.MovieService;
 import com.mp.movieplanner.data.service.TvService;
@@ -19,6 +20,7 @@ public class MoviePlannerApp extends Application {
     private MovieService movieService;
     private TvService tvService;
     private GenreService genreService;
+    private CollectionType type;
 
     private ConnectivityManager cMgr;
     private ImageCache mCache;
@@ -35,6 +37,14 @@ public class MoviePlannerApp extends Application {
         return genreService;
     }
 
+    public void setType(CollectionType type) {
+        this.type = type;
+    }
+
+    public CollectionType getType() {
+        return type;
+    }
+
     public ImageCache getImageCache() {
         return mCache;
     }
@@ -45,6 +55,7 @@ public class MoviePlannerApp extends Application {
         cMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         movieService = new MovieServiceImpl(this);
         tvService = new TvServiceImpl(this);
+        type = CollectionType.MOVIE;
         genreService = new GenreServiceImpl(this);
         mCache = new ImageCache();
     }

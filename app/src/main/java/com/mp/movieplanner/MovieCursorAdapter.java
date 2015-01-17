@@ -16,6 +16,8 @@ import com.mp.movieplanner.common.ImageCache;
 
 public class MovieCursorAdapter extends CursorAdapter {
 
+    private final String TAG = MovieCursorAdapter.class.getSimpleName();
+
     private final LayoutInflater mInflater;
     private final ImageCache mCache;
 
@@ -33,7 +35,7 @@ public class MovieCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = mInflater.inflate(R.layout.movie_list_item, parent, false);
+        View view = mInflater.inflate(R.layout.list_item, parent, false);
 
         TextView originalTitle = (TextView) view.findViewById(R.id.list_item_original_title);
         ImageView imageView = (ImageView) view.findViewById(R.id.list_item_image);
@@ -52,8 +54,6 @@ public class MovieCursorAdapter extends CursorAdapter {
         long id = c.getLong(c.getColumnIndex(Movies._ID));
         String originalTitle = c.getString(c.getColumnIndex(Movies.ORIGINAL_TITLE));
         String thumbUrl = c.getString(c.getColumnIndex(Movies.POSTER_PATH));
-
-        Log.i("MovieCursorAdapter", "" + id);
 
         holder.text.setText(id + " " + originalTitle);
 

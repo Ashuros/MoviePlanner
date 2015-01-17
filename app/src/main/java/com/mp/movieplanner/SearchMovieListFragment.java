@@ -13,11 +13,11 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.mp.movieplanner.common.Utils;
 import com.mp.movieplanner.data.service.MovieService;
 import com.mp.movieplanner.dialog.AddMovieDialog;
 import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.model.MovieSearchResult;
-import com.mp.movieplanner.common.Utils;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -30,7 +30,7 @@ public class SearchMovieListFragment extends ListFragment implements
 
     private static final String TAG_DIALOG = "ADD_DIALOG_TAG";
 
-    private OnSearchElementSelectedListener mCallback;
+    private OnSearchMovieSelectedListener mCallback;
     private ArrayAdapter<MovieSearchResult> adapter;
 
     private MoviePlannerApp mApp;
@@ -38,8 +38,8 @@ public class SearchMovieListFragment extends ListFragment implements
 
     private MovieSearchResult movieToAdd;
 
-    public interface OnSearchElementSelectedListener {
-        public void onSearchElementSelected(int position);
+    public interface OnSearchMovieSelectedListener {
+        public void onSearchMovieSelected(int position);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class SearchMovieListFragment extends ListFragment implements
         super.onAttach(activity);
         Log.i(TAG, "onAttach(Activity)");
         try {
-            mCallback = (OnSearchElementSelectedListener) activity;
+            mCallback = (OnSearchMovieSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement OnSearchElementSelectedListener");
         }
@@ -64,7 +64,7 @@ public class SearchMovieListFragment extends ListFragment implements
         adapter = new ArrayAdapter<>(getActivity(), layout);
         setListAdapter(adapter);
 
-        setRetainInstance(true);
+        //setRetainInstance(true);
 
         mApp = (MoviePlannerApp) getActivity().getApplication();
         movieService = mApp.getMovieService();
@@ -77,18 +77,6 @@ public class SearchMovieListFragment extends ListFragment implements
         getListView().setLongClickable(true);
         getListView().setOnItemLongClickListener(this);
         super.onActivityCreated(savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.i(TAG, "onStart()");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.i(TAG, "onResume()");
     }
 
     @Override
@@ -109,24 +97,6 @@ public class SearchMovieListFragment extends ListFragment implements
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         new AddMovieToDatabase().execute(movieToAdd);
-    }
-
-    @Override
-    public void onPause() {
-        Log.i(TAG, "onPause()");
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        Log.i(TAG, "onStop()");
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "onDestroy()");
     }
 
     private void showToast(int id) {

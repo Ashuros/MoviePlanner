@@ -2,6 +2,8 @@ package com.mp.movieplanner.common;
 
 import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.model.MovieSearchResult;
+import com.mp.movieplanner.model.Tv;
+import com.mp.movieplanner.model.TvSearchResult;
 import com.mp.movieplanner.themoviedb.TheMovieDbClient;
 import com.mp.movieplanner.themoviedb.TheMovieDbClientImpl;
 
@@ -24,5 +26,16 @@ public class Utils {
             movieSearchResults.add(new MovieSearchResult(id, title));
         }
         return movieSearchResults;
+    }
+
+    public static List<TvSearchResult> toTvSearchResult(List<Tv> tvs) {
+        List<TvSearchResult> tvSearchResults = new ArrayList<>(tvs.size());
+
+        for (Tv tv : tvs) {
+            String id = String.valueOf(tv.getTvId());
+            String title = tv.getOriginal_name();
+            tvSearchResults.add(new TvSearchResult(id, title));
+        }
+        return tvSearchResults;
     }
 }

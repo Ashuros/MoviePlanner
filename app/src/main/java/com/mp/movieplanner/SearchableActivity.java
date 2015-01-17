@@ -1,23 +1,29 @@
 package com.mp.movieplanner;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+
 public class SearchableActivity extends Activity implements
-        SearchMovieListFragment.OnSearchElementSelectedListener {
+        SearchMovieListFragment.OnSearchMovieSelectedListener, SearchTvFragment.OnSearchTvSelectedListener {
 
     private static final String TAG = SearchableActivity.class.getSimpleName();
 
     private static final String TAG_LIST_SEARCH = "SEARCH_FRAGMENT";
+
+    private MoviePlannerApp app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_view);
         Log.i(TAG, "onCreate(Bundle savedInstanceState)");
+        app = (MoviePlannerApp) getApplication();
         handleIntent(getIntent());
     }
 
@@ -29,10 +35,11 @@ public class SearchableActivity extends Activity implements
 
     private void handleIntent(Intent intent) {
         FragmentManager fm = getFragmentManager();
-        SearchMovieListFragment fragment = (SearchMovieListFragment) fm.findFragmentByTag(TAG_LIST_SEARCH);
+        Fragment fragment = fm.findFragmentByTag(TAG_LIST_SEARCH);
 
         if (fragment == null) {
-            fragment = new SearchMovieListFragment();
+
+            fragment = app.getType().newSearchFragmentInstance();
 
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
                 String query = intent.getStringExtra(SearchManager.QUERY);
@@ -46,6 +53,8 @@ public class SearchableActivity extends Activity implements
     }
 
     @Override
-    public void onSearchElementSelected(int position) {
-    }
+    public void onSearchMovieSelected(int position) {}
+
+    @Override
+    public void onSearchTvSelected(int position) {}
 }

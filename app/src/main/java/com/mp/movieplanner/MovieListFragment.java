@@ -24,7 +24,7 @@ public class MovieListFragment extends ListFragment
     //private ArrayAdapter<Movie> adapter;
     private MovieService movieService;
 
-    private MovieCursorAdapter mAdapter;
+    private MovieCursorAdapter adapter;
 
     public interface OnMovieSelectedListener {
         public void onMovieSelected(long position);
@@ -43,24 +43,11 @@ public class MovieListFragment extends ListFragment
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate(Bundle)");
-        final int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ? android.R.layout.simple_list_item_activated_1
-                : android.R.layout.simple_list_item_1;
-
-        //adapter = new ArrayAdapter<>(getActivity(), layout);
-        //setListAdapter(adapter);
-        //setListAdapter(mAdapter);
-        setRetainInstance(true);
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.i(TAG, "onActivityCreated(Bundle)");
         super.onActivityCreated(savedInstanceState);
-        mAdapter = new MovieCursorAdapter(getActivity(), null, 0, ((MoviePlannerApp) getActivity().getApplication()).getImageCache());
-        setListAdapter(mAdapter);
+        adapter = new MovieCursorAdapter(getActivity(), null, 0, ((MoviePlannerApp) getActivity().getApplication()).getImageCache());
+        setListAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
 
     }
@@ -117,29 +104,12 @@ public class MovieListFragment extends ListFragment
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mAdapter.swapCursor(data);
+        adapter.swapCursor(data);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> arg0) {
-        mAdapter.swapCursor(null);
+        adapter.swapCursor(null);
     }
 
-    @Override
-    public void onPause() {
-        Log.i(TAG, "onPause()");
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        Log.i(TAG, "onStop()");
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.i(TAG, "onDestroy()");
-        super.onDestroy();
-    }
 }
