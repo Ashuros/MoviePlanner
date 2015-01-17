@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.mp.movieplanner.common.Utils;
 import com.mp.movieplanner.data.service.MovieService;
-import com.mp.movieplanner.dialog.AddMovieDialog;
+import com.mp.movieplanner.dialog.AddDialog;
 import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.model.MovieSearchResult;
 
@@ -24,11 +24,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class SearchMovieListFragment extends ListFragment implements
-        OnItemLongClickListener, AddMovieDialog.NoticeDialogListener {
+        OnItemLongClickListener, AddDialog.NoticeDialogListener {
 
     public static final String TAG = SearchMovieListFragment.class.getSimpleName();
-
-    private static final String TAG_DIALOG = "ADD_DIALOG_TAG";
 
     private OnSearchMovieSelectedListener mCallback;
     private ArrayAdapter<MovieSearchResult> adapter;
@@ -88,9 +86,9 @@ public class SearchMovieListFragment extends ListFragment implements
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         movieToAdd = (MovieSearchResult) parent.getItemAtPosition(position);
-        DialogFragment dialog = AddMovieDialog.newInstance(movieToAdd.getTitle());
+        DialogFragment dialog = AddDialog.newInstance(movieToAdd.getTitle());
         dialog.setTargetFragment(this, 0);
-        dialog.show(getActivity().getFragmentManager(), TAG_DIALOG);
+        dialog.show(getActivity().getFragmentManager(), "ADD_DIALOG_TAG");
         return true;
     }
 

@@ -1,6 +1,7 @@
 package com.mp.movieplanner;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -13,13 +14,16 @@ import android.widget.Toast;
 
 import com.mp.movieplanner.common.Utils;
 import com.mp.movieplanner.data.service.TvService;
+import com.mp.movieplanner.dialog.AddDialog;
+import com.mp.movieplanner.model.MovieSearchResult;
 import com.mp.movieplanner.model.Tv;
 import com.mp.movieplanner.model.TvSearchResult;
 
 import java.util.Collections;
 import java.util.List;
 
-public class SearchTvFragment extends ListFragment implements AdapterView.OnItemLongClickListener {
+public class SearchTvFragment extends ListFragment implements AdapterView.OnItemLongClickListener,
+AddDialog.NoticeDialogListener {
 
     private static final String TAG = SearchTvFragment.class.getSimpleName();
 
@@ -30,7 +34,6 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
     private TvService tvService;
 
     private TvSearchResult tvToAdd;
-
 
     public interface OnSearchTvSelectedListener {
         public void onSearchTvSelected(int position);
@@ -80,7 +83,16 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        return false; //TODO implement
+        tvToAdd = (TvSearchResult) parent.getItemAtPosition(position);
+        DialogFragment dialog = AddDialog.newInstance(tvToAdd.getOriginal_name());
+        dialog.setTargetFragment(this, 0);
+        dialog.show(getActivity().getFragmentManager(), "ADD_DIALOG_TAG");
+        return true;
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+
     }
 
     private void showToast(int id) {
@@ -88,7 +100,6 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
                 getString(id),
                 Toast.LENGTH_SHORT).show();
     }
-
 
     private class SearchTvTask extends AsyncTask<String, Void, List<TvSearchResult>> {
         @Override
@@ -121,6 +132,13 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
             Log.d(TAG, dbTvs.toString());
             tvs.removeAll(dbTvs);
             return tvs;
+        }
+    }
+
+    private class AddTvToDatabase extends AsyncTask<TvSearchResult, Void, Long> {
+        @Override
+        protected Long doInBackground(TvSearchResult... tvSearchResults) {
+            return null;//TODO
         }
     }
 }
