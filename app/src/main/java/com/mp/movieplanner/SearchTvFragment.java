@@ -92,7 +92,7 @@ AddDialog.NoticeDialogListener {
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-
+        new AddTvToDatabase().execute(tvToAdd);
     }
 
     private void showToast(int id) {
@@ -138,7 +138,8 @@ AddDialog.NoticeDialogListener {
     private class AddTvToDatabase extends AsyncTask<TvSearchResult, Void, Long> {
         @Override
         protected Long doInBackground(TvSearchResult... tvSearchResults) {
-            return null;//TODO
+            Log.d(TAG, Utils.getTheMovieDBClient().findTv(tvSearchResults[0].getId()).toString());
+            return null;
         }
     }
 }

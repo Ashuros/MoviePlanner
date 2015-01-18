@@ -6,13 +6,15 @@ import java.util.List;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.mp.movieplanner.data.MovieContract;
 import com.mp.movieplanner.data.dao.Dao;
 import com.mp.movieplanner.model.Genre;
 
 public class GenreDao implements Dao<Genre> {
-	
+
+    private static final String TAG = GenreDao.class.getName();
 	
 	private SQLiteDatabase db;
 	
@@ -23,6 +25,7 @@ public class GenreDao implements Dao<Genre> {
 	
 	@Override
 	public long save(Genre genre) {
+        Log.d(TAG, "Saving genre " + genre);
 		ContentValues values = new ContentValues();
 		values.put(MovieContract.GenresMovie.GENRE_ID, genre.getGenreId());
 		values.put(MovieContract.GenresMovie.GENRE_NAME, genre.getName());
@@ -31,6 +34,7 @@ public class GenreDao implements Dao<Genre> {
 
 	@Override
 	public void delete(Genre genre) {
+        Log.d(TAG, "Deleting genre " + genre);
 		if (genre.getId() > 0) {
 			String selection = MovieContract.GenresMovie.GENRE_NAME + " LIKE ?";
 			String[] selectionArgs = { genre.getName() };
@@ -40,6 +44,7 @@ public class GenreDao implements Dao<Genre> {
 
 	@Override
 	public Genre get(long id) {
+        Log.d(TAG, "Getting genre by ID: " + id);
 		Genre genre = null;
 		String[] projection = {
 			MovieContract.GenresMovie._ID,
@@ -76,6 +81,7 @@ public class GenreDao implements Dao<Genre> {
 
 	@Override
 	public List<Genre> getAll() {
+        Log.d(TAG, "Getting all genres");
 		List<Genre> genres = new ArrayList<>();
 		Cursor c = db.query(
 			MovieContract.GenresMovie.TABLE_NAME,

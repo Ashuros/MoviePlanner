@@ -61,7 +61,7 @@ public class MoviePlannerDbHelper extends SQLiteOpenHelper {
         Tv.onCreate(db);
         TvGenres.onCreate(db);
 
-
+        initTvGenres(db);
 	}
 	
 	@Override
@@ -74,12 +74,26 @@ public class MoviePlannerDbHelper extends SQLiteOpenHelper {
 
     private void initMovieGenres(SQLiteDatabase db) {
         if (((MoviePlannerApp)ctx).isConnectionPresent()) {
-            final GenreDao genreDao = new GenreDao(db);
+            final GenreDao movieGenreDao = new GenreDao(db);
             new Thread( new Runnable() {
                 @Override
                 public void run() {
                     for (Genre genre : Utils.getTheMovieDBClient().retrieveMovieGenres()) {
-                        genreDao.save(genre);
+                        movieGenreDao.save(genre);
+                    }
+                }
+            }).start();
+        }
+    }
+
+    private void initTvGenres(SQLiteDatabase db) {
+        if (((MoviePlannerApp)ctx).isConnectionPresent()) {
+            final com.mp.movieplanner.data.dao.tv.GenreDao tvGenreDao = new com.mp.movieplanner.data.dao.tv.GenreDao(db);
+            new Thread( new Runnable() {
+                @Override
+                public void run() {
+                    for (Genre genre : Utils.getTheMovieDBClient().retrieveTvGenres()) {
+                        tvGenreDao.save(genre);
                     }
                 }
             }).start();

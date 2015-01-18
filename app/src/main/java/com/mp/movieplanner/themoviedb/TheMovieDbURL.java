@@ -11,9 +11,13 @@ public final class TheMovieDbURL {
 
     static final String FIND_MOVIE_URL = "http://api.themoviedb.org/3/movie/{id}?" + API_KEY;
 
-    static final String GET_GENRES = "http://api.themoviedb.org/3/genre/movie/list?" + API_KEY;
+    static final String GET_MOVIE_GENRES = "http://api.themoviedb.org/3/genre/movie/list?" + API_KEY;
 
     static final String SEARCH_TV_URL = "http://api.themoviedb.org/3/search/tv?page=1&query={query}&" + API_KEY;
+
+    static final String FIND_TV_URL = "http://api.themoviedb.org/3/tv/{id}?" + API_KEY;
+
+    static final String GET_TV_GENRES = "http://api.themoviedb.org/3/genre/tv/list?" + API_KEY;
 
     public static final String IMAGE_URL = "http://image.tmdb.org/t/p/";
 

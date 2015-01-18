@@ -1,12 +1,14 @@
 package com.mp.movieplanner.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Tv extends ModelBase {
+
     private long tvId;
 
     private String original_name;
@@ -27,12 +29,14 @@ public class Tv extends ModelBase {
         genres = new HashSet<>();
     }
 
+    @JsonProperty("id")
     public long getTvId() {
-        return id;
+        return tvId;
     }
 
-    public void setTvId(long id) {
-        this.id = id;
+    @JsonProperty("id")
+    public void setTvId(long tvId) {
+        this.tvId = tvId;
     }
 
     public String getOriginal_name() {

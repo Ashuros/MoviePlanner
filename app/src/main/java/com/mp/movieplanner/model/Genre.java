@@ -1,5 +1,6 @@
 package com.mp.movieplanner.model;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Genre extends ModelBase implements Comparable<Genre> {
@@ -13,29 +14,47 @@ public class Genre extends ModelBase implements Comparable<Genre> {
 		this.name = name;
 	}
 
-	public long getGenreId() {
-		return genreId;
-	}
+    @JsonProperty("id")
+    public long getGenreId() {
+        return genreId;
+    }
 
     @JsonProperty("id")
-	public void setGenreId(long genreId) {
-		this.genreId = genreId;
-	}
+    public void setGenreId(long genreId) {
+        this.genreId = genreId;
+    }
 
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public String toString() {
-		return super.toString() + " " + this.name;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
-	@Override
+        Genre genre = (Genre) o;
+
+        if (genreId != genre.genreId) return false;
+        if (name != null ? !name.equals(genre.name) : genre.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (int) (genreId ^ (genreId >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
+    }
+
+    @Override
 	public int compareTo(Genre another) {
 
 		if (another == null) {
@@ -55,4 +74,12 @@ public class Genre extends ModelBase implements Comparable<Genre> {
 
 	    return this.name.compareToIgnoreCase(another.name);
 	}
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "genreId=" + genreId +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

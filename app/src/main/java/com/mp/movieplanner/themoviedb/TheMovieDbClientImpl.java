@@ -5,14 +5,18 @@ import android.util.Log;
 import com.mp.movieplanner.model.Genre;
 import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.model.MovieSearchResult;
+import com.mp.movieplanner.model.Tv;
 import com.mp.movieplanner.model.TvSearchResult;
 import com.mp.movieplanner.themoviedb.response.GenreResultResponse;
 import com.mp.movieplanner.themoviedb.response.MovieSearchResultResponse;
 import com.mp.movieplanner.themoviedb.response.TvSearchResultResponse;
 
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -44,10 +48,11 @@ public class TheMovieDbClientImpl implements TheMovieDbClient {
     }
 
     @Override
-    public Set<Genre> retrieveMovieGenres() {
-        Log.d(TAG, "Downloading all genres");
-        GenreResultResponse genres =  restTemplate.getForObject(TheMovieDbURL.GET_GENRES, GenreResultResponse.class, "");
-        return genres.getGenres();
+    public List<Genre> retrieveMovieGenres() {
+        Log.d(TAG, "Fetching all movie genres");
+        GenreResultResponse response =  restTemplate.getForObject(TheMovieDbURL.GET_MOVIE_GENRES, GenreResultResponse.class, "");
+        Log.d(TAG, response.getGenres().toString());
+        return response.getGenres();
     }
 
     @Override
@@ -55,5 +60,19 @@ public class TheMovieDbClientImpl implements TheMovieDbClient {
         Log.d(TAG, "Searching TV with query: " + query);
         TvSearchResultResponse response = restTemplate.getForObject(TheMovieDbURL.SEARCH_TV_URL, TvSearchResultResponse.class, query);
         return response.getResults();
+    }
+
+    @Override
+    public Tv findTv(String id) {
+        Log.d(TAG, "Finding TV with id: " + id);
+        return restTemplate.getForObject(TheMovieDbURL.FIND_TV_URL, Tv.class, id);
+    }
+
+    @Override
+    public List<Genre> retrieveTvGenres() {
+        Log.d(TAG, "Fetching all Tv genres");
+        GenreResultResponse response = restTemplate.getForObject(TheMovieDbURL.GET_TV_GENRES, GenreResultResponse.class);
+        Log.d(TAG, response.getGenres().toString());
+        return response.getGenres();
     }
 }
