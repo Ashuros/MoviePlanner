@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.mp.movieplanner.common.Utils;
 import com.mp.movieplanner.data.service.MovieService;
@@ -19,7 +18,6 @@ import com.mp.movieplanner.dialog.AddDialog;
 import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.model.MovieSearchResult;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,10 +33,6 @@ public class SearchMovieListFragment extends ListFragment implements
     private MovieService movieService;
 
     private MovieSearchResult movieToAdd;
-
-    public interface OnSearchMovieSelectedListener {
-        public void onSearchMovieSelected(int position);
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -61,8 +55,6 @@ public class SearchMovieListFragment extends ListFragment implements
 
         adapter = new ArrayAdapter<>(getActivity(), layout);
         setListAdapter(adapter);
-
-        //setRetainInstance(true);
 
         mApp = (MoviePlannerApp) getActivity().getApplication();
         movieService = mApp.getMovieService();
@@ -97,10 +89,8 @@ public class SearchMovieListFragment extends ListFragment implements
         new AddMovieToDatabase().execute(movieToAdd);
     }
 
-    private void showToast(int id) {
-        Toast.makeText(getActivity(),
-                getString(id),
-                Toast.LENGTH_SHORT).show();
+    public interface OnSearchMovieSelectedListener {
+        public void onSearchMovieSelected(int position);
     }
 
     private class AddMovieToDatabase extends AsyncTask<MovieSearchResult, Void, Long> {
@@ -115,9 +105,9 @@ public class SearchMovieListFragment extends ListFragment implements
             if (movieId != 0) {
                 adapter.remove(movieToAdd);
                 adapter.notifyDataSetChanged();
-                showToast(R.string.search_movie_saved);
+                Utils.showToast(getActivity(), R.string.search_movie_saved);
             } else {
-                showToast(R.string.search_error_saving_movie);
+                Utils.showToast(getActivity(), R.string.search_error_saving_movie);
             }
         }
     }
@@ -134,7 +124,7 @@ public class SearchMovieListFragment extends ListFragment implements
         @Override
         protected void onPostExecute(List<MovieSearchResult> movies) {
             if (movies.isEmpty()) {
-                showToast(R.string.search_error_retrieving_data);
+                Utils.showToast(getActivity(), R.string.search_error_retrieving_data);
                 ((Activity) mCallback).finish();
                 return;
             }

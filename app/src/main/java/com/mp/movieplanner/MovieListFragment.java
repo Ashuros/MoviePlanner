@@ -6,7 +6,6 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,14 +20,9 @@ public class MovieListFragment extends ListFragment
     public static String TAG = MovieListFragment.class.getSimpleName();
 
     private OnMovieSelectedListener mCallback;
-    //private ArrayAdapter<Movie> adapter;
     private MovieService movieService;
 
     private MovieCursorAdapter adapter;
-
-    public interface OnMovieSelectedListener {
-        public void onMovieSelected(long position);
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -65,7 +59,6 @@ public class MovieListFragment extends ListFragment
     public void onResume() {
         super.onResume();
         Log.i(TAG, "onResume()");
-        //new GetMoviesTask().execute();
         getLoaderManager().restartLoader(0, null, this);
     }
 
@@ -78,16 +71,11 @@ public class MovieListFragment extends ListFragment
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id) {
-        // Notify the parent activity of selected item
         if (mCallback != null) {
-            // Set the item as checked to be highlighted when in two-pane layout
-            Log.i("CHECKABLE", String.valueOf(position));
-            //getListView().setItemChecked(position, true);
             listView.setItemChecked(position, true);
             Cursor c = ((MovieCursorAdapter) listView.getAdapter()).getCursor();
             c.moveToPosition(position);
             long movieId = c.getLong(c.getColumnIndex(Movies._ID));
-            Log.i("DAMN IT!", movieId + "");
             mCallback.onMovieSelected(movieId);
         }
     }
@@ -110,6 +98,10 @@ public class MovieListFragment extends ListFragment
     @Override
     public void onLoaderReset(Loader<Cursor> arg0) {
         adapter.swapCursor(null);
+    }
+
+    public interface OnMovieSelectedListener {
+        public void onMovieSelected(long position);
     }
 
 }

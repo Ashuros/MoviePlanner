@@ -1,5 +1,8 @@
 package com.mp.movieplanner.common;
 
+import android.app.Activity;
+import android.widget.Toast;
+
 import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.model.MovieSearchResult;
 import com.mp.movieplanner.model.Tv;
@@ -37,5 +40,9 @@ public class Utils {
             tvSearchResults.add(new TvSearchResult(id, title));
         }
         return tvSearchResults;
+    }
+
+    public static void showToast(Activity activity, int id) {
+        Toast.makeText(activity, id, Toast.LENGTH_SHORT).show();
     }
 }

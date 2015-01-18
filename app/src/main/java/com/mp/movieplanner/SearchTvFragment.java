@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import com.mp.movieplanner.common.Utils;
 import com.mp.movieplanner.data.service.TvService;
@@ -90,12 +89,6 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
         new AddTvToDatabase().execute(tvToAdd);
     }
 
-    private void showToast(int id) {
-        Toast.makeText(getActivity(),
-                getString(id),
-                Toast.LENGTH_SHORT).show();
-    }
-
     public interface OnSearchTvSelectedListener {
         public void onSearchTvSelected(int position);
     }
@@ -112,7 +105,7 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
         @Override
         protected void onPostExecute(List<TvSearchResult> tvs) {
             if (tvs.isEmpty()) {
-                showToast(R.string.search_error_retrieving_data);
+                Utils.showToast(getActivity(), R.string.search_error_retrieving_data);
                 ((Activity) callback).finish();
                 return;
             }
@@ -144,9 +137,9 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
             if (tvId != 0) {
                 adapter.remove(tvToAdd);
                 adapter.notifyDataSetChanged();
-                showToast(R.string.tv_saved);
+                Utils.showToast(getActivity(), R.string.tv_saved);
             } else {
-                showToast(R.string.tv_error_save);
+                Utils.showToast(getActivity(), R.string.tv_error_save);
             }
         }
     }

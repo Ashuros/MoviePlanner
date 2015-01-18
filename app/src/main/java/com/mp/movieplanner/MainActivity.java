@@ -74,24 +74,10 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
     }
 
     @Override
-    public void onMovieSelected(long position) {
-//        MovieDetailsFragment detailsFrag = null;
-//        if (fm.findFragmentById(R.id.fragment_container) != null) {
-//            detailsFrag = new MovieDetailsFragment();
-//            FragmentTransaction t = fm.beginTransaction();
-//            t.replace(R.id.fragment_container, detailsFrag);
-//            t.addToBackStack(null);
-//            t.commit();
-//            fm.executePendingTransactions();
-//        }
-//        detailsFrag.updateMovieView(position);
-    }
+    public void onMovieSelected(long position) {}
 
     @Override
-    public void onTvSelected(long position) {
-
-    }
-
+    public void onTvSelected(long position) {}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

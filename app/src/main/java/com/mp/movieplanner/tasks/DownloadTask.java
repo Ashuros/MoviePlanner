@@ -56,10 +56,10 @@ public class DownloadTask extends AsyncTask<String, Void, Bitmap> {
 	             imageCache.put(inputUrls[0], bitmap);
 	          }
 		} catch (MalformedURLException e) {
-			Log.i(TAG, "Exception loading image, malformed URL", e);
+			Log.i(TAG, "Exception while loading image, malformed URL", e);
 			e.printStackTrace();
 		} catch (IOException e) {
-			Log.i(TAG, "Exception loading image, IO error", e);
+			Log.i(TAG, "Exception while loading image, IO error", e);
 			e.printStackTrace();
 		}
 		return bitmap;

@@ -1,7 +1,6 @@
 package com.mp.movieplanner.themoviedb.response;
 
 
-import com.mp.movieplanner.model.Tv;
 import com.mp.movieplanner.model.TvSearchResult;
 
 import java.util.List;

@@ -43,7 +43,7 @@ public class SearchableActivity extends Activity implements
 
             if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
                 String query = intent.getStringExtra(SearchManager.QUERY);
-                Log.i(TAG, "Received query {" + query + "}. Performing download.");
+                Log.d(TAG, "Received query {" + query + "}");
                 Bundle bundle = new Bundle();
                 bundle.putString("QUERY", query);
                 fragment.setArguments(bundle);
