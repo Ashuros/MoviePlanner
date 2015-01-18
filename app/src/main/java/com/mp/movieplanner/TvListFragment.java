@@ -6,7 +6,6 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,10 +23,6 @@ public class TvListFragment extends ListFragment implements LoaderManager.Loader
     private TvService tvService;
 
     private TvCursorAdapter adapter;
-
-    public interface OnTvSelectedListener {
-        public void onTvSelected(long position);
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -48,6 +43,19 @@ public class TvListFragment extends ListFragment implements LoaderManager.Loader
         adapter = new TvCursorAdapter(getActivity(), null, 0, ((MoviePlannerApp) getActivity().getApplication()).getImageCache());
         setListAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
+    }
+
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume()");
+        getLoaderManager().restartLoader(0, null, this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i(TAG, "onDetach()");
+        callback = null;
     }
 
     @Override
@@ -81,6 +89,10 @@ public class TvListFragment extends ListFragment implements LoaderManager.Loader
     @Override
     public void onLoaderReset(Loader<Cursor> arg0) {
         adapter.swapCursor(null);
+    }
+
+    public interface OnTvSelectedListener {
+        public void onTvSelected(long position);
     }
 
 }

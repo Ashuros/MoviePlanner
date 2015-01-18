@@ -15,7 +15,6 @@ import android.widget.Toast;
 import com.mp.movieplanner.common.Utils;
 import com.mp.movieplanner.data.service.TvService;
 import com.mp.movieplanner.dialog.AddDialog;
-import com.mp.movieplanner.model.MovieSearchResult;
 import com.mp.movieplanner.model.Tv;
 import com.mp.movieplanner.model.TvSearchResult;
 
@@ -23,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class SearchTvFragment extends ListFragment implements AdapterView.OnItemLongClickListener,
-AddDialog.NoticeDialogListener {
+        AddDialog.NoticeDialogListener {
 
     private static final String TAG = SearchTvFragment.class.getSimpleName();
 
@@ -34,10 +33,6 @@ AddDialog.NoticeDialogListener {
     private TvService tvService;
 
     private TvSearchResult tvToAdd;
-
-    public interface OnSearchTvSelectedListener {
-        public void onSearchTvSelected(int position);
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -101,6 +96,10 @@ AddDialog.NoticeDialogListener {
                 Toast.LENGTH_SHORT).show();
     }
 
+    public interface OnSearchTvSelectedListener {
+        public void onSearchTvSelected(int position);
+    }
+
     private class SearchTvTask extends AsyncTask<String, Void, List<TvSearchResult>> {
         @Override
         protected List<TvSearchResult> doInBackground(String... query) {
@@ -126,10 +125,8 @@ AddDialog.NoticeDialogListener {
         }
 
         private List<TvSearchResult> filterTvsNotPresentInDatabase(List<TvSearchResult> tvs) {
-            Log.d(TAG, tvs.toString());
             List<Tv> allTvs = tvService.getAllTvs();
             List<TvSearchResult> dbTvs = Utils.toTvSearchResult(allTvs);
-            Log.d(TAG, dbTvs.toString());
             tvs.removeAll(dbTvs);
             return tvs;
         }
@@ -137,9 +134,20 @@ AddDialog.NoticeDialogListener {
 
     private class AddTvToDatabase extends AsyncTask<TvSearchResult, Void, Long> {
         @Override
-        protected Long doInBackground(TvSearchResult... tvSearchResults) {
-            Log.d(TAG, Utils.getTheMovieDBClient().findTv(tvSearchResults[0].getId()).toString());
-            return null;
+        protected Long doInBackground(TvSearchResult... tvs) {
+            Tv tv = Utils.getTheMovieDBClient().findTv(tvs[0].getId());
+            return tvService.saveTv(tv);
+        }
+
+        @Override
+        protected void onPostExecute(Long tvId) {
+            if (tvId != 0) {
+                adapter.remove(tvToAdd);
+                adapter.notifyDataSetChanged();
+                showToast(R.string.tv_saved);
+            } else {
+                showToast(R.string.tv_error_save);
+            }
         }
     }
 }

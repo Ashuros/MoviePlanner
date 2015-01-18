@@ -12,6 +12,9 @@
 	<string name="search_error_retrieving_data">Encountered an error while retrieving data, please try again.</string>
 	<string name="search_error_saving_movie">Error while saving movie.</string>
 	<string name="search_movie_saved">Movie saved successfully.</string>
+
+    <string name="tv_saved">TV saved</string>
+    <string name="tv_error_save">Error while saving TV</string>
 	
 	<string name="dialog_add_movie_title">Add \"%1$s\" ?</string>
 	<string name="dialog_add_movie_confirm">Confirm</string>
@@ -22,5 +25,7 @@
 
     <string name="movie_tab">Movies</string>
     <string name="tv_tab">TV</string>
+
+
 	
 </resources>

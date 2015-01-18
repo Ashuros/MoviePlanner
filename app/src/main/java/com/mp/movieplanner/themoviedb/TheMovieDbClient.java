@@ -6,7 +6,6 @@ import com.mp.movieplanner.model.MovieSearchResult;
 import com.mp.movieplanner.model.Tv;
 import com.mp.movieplanner.model.TvSearchResult;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -14,7 +13,7 @@ public interface TheMovieDbClient {
 
     public List<MovieSearchResult> searchMovies(String searchString);
 
-    public Movie findMovie(String id) throws IOException;
+    public Movie findMovie(String id);
 
     public List<Genre> retrieveMovieGenres();
 

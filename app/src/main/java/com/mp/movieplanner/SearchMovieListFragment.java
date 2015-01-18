@@ -106,17 +106,13 @@ public class SearchMovieListFragment extends ListFragment implements
     private class AddMovieToDatabase extends AsyncTask<MovieSearchResult, Void, Long> {
         @Override
         protected Long doInBackground(MovieSearchResult... movies) {
-            try {
-                return movieService.saveMovie(Utils.getTheMovieDBClient().findMovie(movies[0].getId()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
+            Movie movie = Utils.getTheMovieDBClient().findMovie(movies[0].getId());
+            return movieService.saveMovie(movie);
         }
 
         @Override
         protected void onPostExecute(Long movieId) {
-            if (movieId != null && movieId != 0) {
+            if (movieId != 0) {
                 adapter.remove(movieToAdd);
                 adapter.notifyDataSetChanged();
                 showToast(R.string.search_movie_saved);
@@ -151,10 +147,8 @@ public class SearchMovieListFragment extends ListFragment implements
         }
 
         private List<MovieSearchResult> filterMoviesNotPresentInDatabase(List<MovieSearchResult> movies) {
-            Log.d(TAG, movies.toString());
             List<Movie> allMovies = movieService.getAllMovies();
             List<MovieSearchResult> dbMovies = Utils.toMovieSearchResult(allMovies);
-            Log.d(TAG, dbMovies.toString());
             movies.removeAll(dbMovies);
             return movies;
         }

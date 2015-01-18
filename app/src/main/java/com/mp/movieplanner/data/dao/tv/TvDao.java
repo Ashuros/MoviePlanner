@@ -100,7 +100,7 @@ public class TvDao implements Dao<Tv> {
                 if (tv != null) {
                     tvs.add(tv);
                 }
-            } while (c.moveToFirst());
+            } while (c.moveToNext());
         }
 
         if (!c.isClosed()) {
@@ -112,6 +112,7 @@ public class TvDao implements Dao<Tv> {
 
     @Override
     public Cursor getAllCursor() {
+        Log.d(TAG, "Fetching Tv Cursor getAll()");
         return db.rawQuery("SELECT * FROM " + TvContract.Tv.TABLE_NAME, null);
     }
 
@@ -127,7 +128,6 @@ public class TvDao implements Dao<Tv> {
             tv.setFirst_air_date(c.getString(c.getColumnIndex(FIRST_AIR_DATE)));
             tv.setOverview(c.getString(c.getColumnIndex(OVERVIEW)));
             tv.setVote_average(c.getDouble(c.getColumnIndex(VOTE_AVERAGE)));
-            Log.d(TAG, tv.toString());
         }
         return tv;
     }
