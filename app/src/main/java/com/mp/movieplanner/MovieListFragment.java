@@ -1,28 +1,36 @@
 package com.mp.movieplanner;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.mp.movieplanner.common.Utils;
 import com.mp.movieplanner.data.MovieContract.Movies;
 import com.mp.movieplanner.data.service.MovieService;
+import com.mp.movieplanner.dialog.RemoveDialog;
+import com.mp.movieplanner.model.Movie;
 
 public class MovieListFragment extends ListFragment
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+        implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemLongClickListener, RemoveDialog.RemoveDialogListener {
 
     public static String TAG = MovieListFragment.class.getSimpleName();
 
     private OnMovieSelectedListener mCallback;
-    private MovieService movieService;
 
+    private MovieService movieService;
     private MovieCursorAdapter adapter;
+
+    private Movie movieToRemove;
 
     @Override
     public void onAttach(Activity activity) {
@@ -43,16 +51,7 @@ public class MovieListFragment extends ListFragment
         adapter = new MovieCursorAdapter(getActivity(), null, 0, ((MoviePlannerApp) getActivity().getApplication()).getImageCache());
         setListAdapter(adapter);
         getLoaderManager().initLoader(0, null, this);
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.i(TAG, "onStart()");
-        if (getFragmentManager().findFragmentById(R.id.movie_details_fragment) != null) {
-            getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        }
+        getListView().setOnItemLongClickListener(this);
     }
 
     @Override
@@ -67,6 +66,21 @@ public class MovieListFragment extends ListFragment
         super.onDetach();
         Log.i(TAG, "onDetach()");
         mCallback = null;
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
+        movieToRemove = Utils.buildMovieFromCursor(cursor);
+        DialogFragment dialog = RemoveDialog.newInstance(movieToRemove.getOriginal_title());
+        dialog.setTargetFragment(this, 0);
+        dialog.show(getActivity().getFragmentManager(), "REMOVE_DIALOG_TAG");
+        return true;
+    }
+
+    @Override
+    public void onRemoveDialogPositiveClick(DialogFragment dialog) {
+        new RemoveMovieTask().execute(movieToRemove);
     }
 
     @Override
@@ -102,6 +116,23 @@ public class MovieListFragment extends ListFragment
 
     public interface OnMovieSelectedListener {
         public void onMovieSelected(long position);
+    }
+
+    private  class RemoveMovieTask extends AsyncTask<Movie, Void, Boolean> {
+        @Override
+        protected Boolean doInBackground(Movie... movie) {
+            return movieService.deleteMovie(movie[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (result) {
+                Utils.showToastById(getActivity(), R.string.entry_deleted);
+            } else {
+                Utils.showToastById(getActivity(), R.string.delete_error);
+            }
+            getLoaderManager().restartLoader(0, null, MovieListFragment.this);
+        }
     }
 
 }

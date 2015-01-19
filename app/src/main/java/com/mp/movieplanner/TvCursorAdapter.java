@@ -52,10 +52,10 @@ public class TvCursorAdapter extends CursorAdapter {
         ViewHolder holder = (ViewHolder) listItem.getTag();
 
         long id = c.getLong(c.getColumnIndex(TvContract.Tv._ID));
-        String originalTitle = c.getString(c.getColumnIndex(TvContract.Tv.ORIGINAL_NAME));
+        String originalName = c.getString(c.getColumnIndex(TvContract.Tv.ORIGINAL_NAME));
         String thumbUrl = c.getString(c.getColumnIndex(TvContract.Tv.POSTER_PATH));
 
-        holder.text.setText(id + " " + originalTitle);
+        holder.text.setText(originalName);
 
         holder.image.setImageDrawable(null);
         holder.image.setTag(id);

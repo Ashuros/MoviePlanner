@@ -12,8 +12,8 @@ import com.mp.movieplanner.R;
 
 public class AddDialog extends DialogFragment {
 
-    public interface NoticeDialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog);
+    public interface AddDialogListener {
+        public void onAddDialogPositiveClick(DialogFragment dialog);
 	}
 
     public static String ARG_TITLE = "TITLE";
@@ -35,15 +35,15 @@ public class AddDialog extends DialogFragment {
 					
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(dialogTitle)
-			   .setPositiveButton(R.string.dialog_add_movie_confirm, new DialogInterface.OnClickListener() {
+			   .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
-					NoticeDialogListener searchFragment =(NoticeDialogListener)AddDialog.this.getTargetFragment();
-					searchFragment.onDialogPositiveClick(AddDialog.this);
+					AddDialogListener searchFragment =(AddDialogListener)AddDialog.this.getTargetFragment();
+					searchFragment.onAddDialogPositiveClick(AddDialog.this);
 				}				   
 		});
 		
-		builder.setNegativeButton(R.string.dialog_add_movie_cancel, new DialogInterface.OnClickListener() {
+		builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 				}			

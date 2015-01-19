@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class SearchTvFragment extends ListFragment implements AdapterView.OnItemLongClickListener,
-        AddDialog.NoticeDialogListener {
+        AddDialog.AddDialogListener {
 
     private static final String TAG = SearchTvFragment.class.getSimpleName();
 
@@ -32,6 +32,10 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
     private TvService tvService;
 
     private TvSearchResult tvToAdd;
+
+    public interface OnSearchTvSelectedListener {
+        public void onSearchTvSelected(int position);
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -85,12 +89,8 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
     }
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
+    public void onAddDialogPositiveClick(DialogFragment dialog) {
         new AddTvToDatabase().execute(tvToAdd);
-    }
-
-    public interface OnSearchTvSelectedListener {
-        public void onSearchTvSelected(int position);
     }
 
     private class SearchTvTask extends AsyncTask<String, Void, List<TvSearchResult>> {
@@ -105,7 +105,7 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
         @Override
         protected void onPostExecute(List<TvSearchResult> tvs) {
             if (tvs.isEmpty()) {
-                Utils.showToast(getActivity(), R.string.search_error_retrieving_data);
+                Utils.showToastById(getActivity(), R.string.search_error_retrieving_data);
                 ((Activity) callback).finish();
                 return;
             }
@@ -137,9 +137,9 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
             if (tvId != 0) {
                 adapter.remove(tvToAdd);
                 adapter.notifyDataSetChanged();
-                Utils.showToast(getActivity(), R.string.tv_saved);
+                Utils.showToastById(getActivity(), R.string.tv_saved);
             } else {
-                Utils.showToast(getActivity(), R.string.tv_error_save);
+                Utils.showToastById(getActivity(), R.string.tv_error_save);
             }
         }
     }

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.mp.movieplanner.common.Utils;
 import com.mp.movieplanner.data.MovieContract.Movies;
 import com.mp.movieplanner.data.dao.Dao;
 import com.mp.movieplanner.model.Movie;
@@ -62,7 +63,7 @@ public class MovieDao implements Dao<Movie> {
         );
 
         if (c.moveToFirst()) {
-            movie = buildMovieFromCursor(c);
+            movie = Utils.buildMovieFromCursor(c);
         }
 
         if (!c.isClosed()) {
@@ -89,7 +90,7 @@ public class MovieDao implements Dao<Movie> {
 
         if (c.moveToFirst()) {
             do {
-                Movie m = buildMovieFromCursor(c);
+                Movie m = Utils.buildMovieFromCursor(c);
                 if (m != null) {
                     movies.add(m);
                 }
@@ -128,7 +129,7 @@ public class MovieDao implements Dao<Movie> {
         );
 
         if (c.moveToFirst()) {
-            movie = buildMovieFromCursor(c);
+            movie = Utils.buildMovieFromCursor(c);
         }
 
         if (!c.isClosed()) {
@@ -137,20 +138,4 @@ public class MovieDao implements Dao<Movie> {
 
         return movie;
     }
-
-    private Movie buildMovieFromCursor(Cursor c) {
-        Movie m = null;
-        if (c != null) {
-            m = new Movie();
-            m.setId(c.getLong(c.getColumnIndex(Movies._ID)));
-            m.setMovieId(c.getLong(c.getColumnIndex(Movies.MOVIE_ID)));
-            m.setOriginal_title(c.getString(c.getColumnIndex(Movies.ORIGINAL_TITLE)));
-            m.setOverview(c.getString(c.getColumnIndex(Movies.OVERVIEW)));
-            m.setPopularity(c.getDouble(c.getColumnIndex(Movies.POPULARITY)));
-            m.setPoster_path(c.getString(c.getColumnIndex(Movies.POSTER_PATH)));
-            m.setRelease_date(c.getString(c.getColumnIndex(Movies.RELEASE_DATE)));
-        }
-        return m;
-    }
-
 }

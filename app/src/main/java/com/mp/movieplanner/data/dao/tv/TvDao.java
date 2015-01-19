@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import com.mp.movieplanner.common.Utils;
 import com.mp.movieplanner.data.TvContract;
 import com.mp.movieplanner.data.dao.Dao;
 import com.mp.movieplanner.model.Tv;
@@ -69,7 +70,7 @@ public class TvDao implements Dao<Tv> {
         );
 
         if (c.moveToFirst()) {
-            tv = buildTvFromCursor(c);
+            tv = Utils.buildTvFromCursor(c);
         }
 
         if (!c.isClosed()) {
@@ -96,7 +97,7 @@ public class TvDao implements Dao<Tv> {
 
         if (c.moveToFirst()) {
             do {
-                Tv tv = buildTvFromCursor(c);
+                Tv tv = Utils.buildTvFromCursor(c);
                 if (tv != null) {
                     tvs.add(tv);
                 }
@@ -114,21 +115,5 @@ public class TvDao implements Dao<Tv> {
     public Cursor getAllCursor() {
         Log.d(TAG, "Fetching Tv Cursor getAll()");
         return db.rawQuery("SELECT * FROM " + TvContract.Tv.TABLE_NAME, null);
-    }
-
-    private Tv  buildTvFromCursor(Cursor c) {
-        Tv tv = null;
-        if (c != null) {
-            tv = new Tv();
-            tv.setId(c.getLong(c.getColumnIndex(_ID)));
-            tv.setTvId(c.getLong(c.getColumnIndex(TV_ID)));
-            tv.setOriginal_name(c.getString(c.getColumnIndex(ORIGINAL_NAME)));
-            tv.setPoster_path(c.getString(c.getColumnIndex(POSTER_PATH)));
-            tv.setBackdrop_path(c.getString(c.getColumnIndex(BACKDROP_PATH)));
-            tv.setFirst_air_date(c.getString(c.getColumnIndex(FIRST_AIR_DATE)));
-            tv.setOverview(c.getString(c.getColumnIndex(OVERVIEW)));
-            tv.setVote_average(c.getDouble(c.getColumnIndex(VOTE_AVERAGE)));
-        }
-        return tv;
     }
 }

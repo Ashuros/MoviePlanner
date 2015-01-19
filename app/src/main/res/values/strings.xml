@@ -17,8 +17,12 @@
     <string name="tv_error_save">Error while saving TV</string>
 	
 	<string name="dialog_add_movie_title">Add \"%1$s\" ?</string>
-	<string name="dialog_add_movie_confirm">Confirm</string>
-	<string name="dialog_add_movie_cancel">Cancel</string>	
+    <string name="dialog_remove">Remove \"%1$s\" ?</string>
+    <string name="dialog_confirm">Confirm</string>
+    <string name="dialog_cancel">Cancel</string>
+
+    <string name="entry_deleted">Deleted succesufuly</string>
+    <string name="delete_error">Error while deleting</string>
 
 
     <string name="image_details_description">This image shows a movie poster</string>

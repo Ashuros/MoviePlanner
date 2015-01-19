@@ -89,7 +89,7 @@ public class TvGenresDao {
                 Genre genre = new Genre(c.getLong(0), c.getString(1));
                 Log.d(TAG, genre.toString());
                 genres.add(genre);
-            } while (c.moveToFirst());
+            } while (c.moveToNext());
         }
 
         if (!c.isClosed()) {

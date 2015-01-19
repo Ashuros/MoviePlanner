@@ -7,17 +7,17 @@ import com.mp.movieplanner.common.ImageCache;
 
 public class DownloadListItemTask extends DownloadTask {
 
-	private final long mId;
+	private final long id;
 	
 	public DownloadListItemTask(ImageCache cache, ImageView imageView, long id) {
 		super(cache, imageView);
-		mId = id;
+		this.id = id;
 	}
 	
 	@Override
 	protected void onPostExecute(Bitmap bitmap) {
 		long forPosition = (long) imageView.getTag();
-		if (forPosition == mId && bitmap != null) {
+		if (forPosition == id && bitmap != null) {
 			imageView.setImageBitmap(bitmap);
 		}
 	}

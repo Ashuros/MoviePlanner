@@ -55,7 +55,7 @@ public class MovieCursorAdapter extends CursorAdapter {
         String originalTitle = c.getString(c.getColumnIndex(Movies.ORIGINAL_TITLE));
         String thumbUrl = c.getString(c.getColumnIndex(Movies.POSTER_PATH));
 
-        holder.text.setText(id + " " + originalTitle);
+        holder.text.setText(originalTitle);
 
         holder.image.setImageDrawable(null);
         holder.image.setTag(id);
@@ -68,7 +68,6 @@ public class MovieCursorAdapter extends CursorAdapter {
             }
         }
     }
-
 
     private static class ViewHolder {
         protected final TextView text;

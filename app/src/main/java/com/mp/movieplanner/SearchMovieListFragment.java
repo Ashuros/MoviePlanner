@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class SearchMovieListFragment extends ListFragment implements
-        OnItemLongClickListener, AddDialog.NoticeDialogListener {
+        OnItemLongClickListener, AddDialog.AddDialogListener {
 
     public static final String TAG = SearchMovieListFragment.class.getSimpleName();
 
@@ -85,7 +85,7 @@ public class SearchMovieListFragment extends ListFragment implements
     }
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
+    public void onAddDialogPositiveClick(DialogFragment dialog) {
         new AddMovieToDatabase().execute(movieToAdd);
     }
 
@@ -105,9 +105,9 @@ public class SearchMovieListFragment extends ListFragment implements
             if (movieId != 0) {
                 adapter.remove(movieToAdd);
                 adapter.notifyDataSetChanged();
-                Utils.showToast(getActivity(), R.string.search_movie_saved);
+                Utils.showToastById(getActivity(), R.string.search_movie_saved);
             } else {
-                Utils.showToast(getActivity(), R.string.search_error_saving_movie);
+                Utils.showToastById(getActivity(), R.string.search_error_saving_movie);
             }
         }
     }
@@ -124,7 +124,7 @@ public class SearchMovieListFragment extends ListFragment implements
         @Override
         protected void onPostExecute(List<MovieSearchResult> movies) {
             if (movies.isEmpty()) {
-                Utils.showToast(getActivity(), R.string.search_error_retrieving_data);
+                Utils.showToastById(getActivity(), R.string.search_error_retrieving_data);
                 ((Activity) mCallback).finish();
                 return;
             }

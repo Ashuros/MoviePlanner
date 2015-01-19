@@ -9,7 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum CollectionType {
-    MOVIE(0, SearchMovieListFragment.class), TV(1, SearchTvFragment.class);
+    MOVIE(0, SearchMovieListFragment.class),
+    TV(1, SearchTvFragment.class);
 
     private int collectionType;
     private Class clazz;

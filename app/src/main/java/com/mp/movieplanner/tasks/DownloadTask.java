@@ -29,7 +29,7 @@ public class DownloadTask extends AsyncTask<String, Void, Bitmap> {
 		this.imageView = imageView;
 		imagePlaceholder = imageView.getContext()
 								.getResources()
-								.getDrawable(android.R.drawable.gallery_thumb);		
+								.getDrawable(android.R.drawable.gallery_thumb);
 	}
 	
 	@Override

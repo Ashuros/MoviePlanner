@@ -34,6 +34,9 @@
             <meta-data android:name="android.app.searchable"
                        android:resource="@xml/searchable" />
         </activity>
+
+        <activity android:name=".MovieDetails" />
+        <activity android:name=".TvDetails" />
         
     </application>
 

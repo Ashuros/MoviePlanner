@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -74,10 +75,18 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
     }
 
     @Override
-    public void onMovieSelected(long position) {}
+    public void onMovieSelected(long position) {
+        Intent intent = new Intent(this, MovieDetails.class);
+        intent.putExtra("POSITION", position);
+        startActivity(intent);
+    }
 
     @Override
-    public void onTvSelected(long position) {}
+    public void onTvSelected(long position) {
+        Intent intent = new Intent(this, TvDetails.class);
+        intent.putExtra("POSITION", position);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
