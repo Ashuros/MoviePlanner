@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="@string/chart_title"
+        android:id="@+id/chart_menu_item"
+        android:icon="@drawable/ic_action_sort_by_size"
+        android:showAsAction="always" />
+
     <item android:id="@+id/search_movies"
-      android:title="@string/search_hint"
-      android:icon="@drawable/ic_action_search"
-      android:showAsAction="collapseActionView|ifRoom"
-      android:actionViewClass="android.widget.SearchView" />
+          android:title="@string/search_hint"
+          android:icon="@drawable/ic_action_search"
+          android:showAsAction="collapseActionView|ifRoom"
+          android:actionViewClass="android.widget.SearchView" />
 </menu>

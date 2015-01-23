@@ -6,9 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mp.movieplanner.model.Genre;
-import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.model.Tv;
-import com.mp.movieplanner.tasks.DownloadListItemTask;
+import com.mp.movieplanner.tasks.DownloadListImageTask;
 
 public class TvDetails extends Activity {
     private MoviePlannerApp app;
@@ -24,14 +23,14 @@ public class TvDetails extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.movie_details_fragment);
+        setContentView(R.layout.details);
         position = getIntent().getExtras().getLong("POSITION");
         app = (MoviePlannerApp) getApplication();
-        image = (ImageView) findViewById(R.id.movie_view_image);
-        originalTitle = (TextView) findViewById(R.id.movie_view_title);
-        releaseDate = (TextView) findViewById(R.id.movie_view_date);
-        overview = (TextView) findViewById(R.id.movie_view_overview);
-        genres = (TextView) findViewById(R.id.movie_view_genres);
+        image = (ImageView) findViewById(R.id.details_image);
+        originalTitle = (TextView) findViewById(R.id.details_title);
+        releaseDate = (TextView) findViewById(R.id.details_date);
+        overview = (TextView) findViewById(R.id.details_overview);
+        genres = (TextView) findViewById(R.id.details_genres);
     }
 
     @Override
@@ -43,7 +42,7 @@ public class TvDetails extends Activity {
     public void updateMovieView(long position) {
         Tv tv = app.getTvService().getTvById(position);
         image.setTag(position);
-        new DownloadListItemTask(app.getImageCache(), image, position).execute(tv.getPoster_path());
+        new DownloadListImageTask(app.getImageCache(), image, position).execute(tv.getPoster_path());
         originalTitle.setText(tv.getOriginal_name());
         releaseDate.setText(tv.getFirst_air_date());
         overview.setText(tv.getOverview());
@@ -51,8 +50,8 @@ public class TvDetails extends Activity {
         StringBuilder genreLabels = new StringBuilder();
         for (Genre g : tv.getGenres()) {
             genreLabels.append(g.getName())
-                    .append(" ");
+                       .append(", ");
         }
-        genres.setText(genreLabels.toString());
+        genres.setText(genreLabels.substring(0, genreLabels.length() > 0 ? genreLabels.length() - 2 : genreLabels.length()));
     }
 }

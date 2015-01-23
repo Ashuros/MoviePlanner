@@ -2,5 +2,5 @@
 <resources>
     <color name="mp_holo_blue_dark">#060015</color>
     <color name="translucent_blue">#802EBDF5</color>
-    <color name="opaque_red">#f00</color>
+    <color name="opaque_red">#9f9</color>
 </resources>

@@ -82,9 +82,7 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         tvToAdd = (TvSearchResult) parent.getItemAtPosition(position);
-        DialogFragment dialog = AddDialog.newInstance(tvToAdd.getOriginal_name());
-        dialog.setTargetFragment(this, 0);
-        dialog.show(getActivity().getFragmentManager(), "ADD_DIALOG_TAG");
+        new FetchMovieInfo().execute(tvToAdd);
         return true;
     }
 
@@ -128,8 +126,12 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
     private class AddTvToDatabase extends AsyncTask<TvSearchResult, Void, Long> {
         @Override
         protected Long doInBackground(TvSearchResult... tvs) {
-            Tv tv = Utils.getTheMovieDBClient().findTv(tvs[0].getId());
-            return tvService.saveTv(tv);
+            if (app.isConnectionPresent()) {
+                Tv tv = Utils.getTheMovieDBClient().findTv(tvs[0].getId());
+                return tvService.saveTv(tv);
+            }
+            Utils.showToastByIdInUiThread(getActivity(), R.string.search_network_unavailable);
+            return 0L;
         }
 
         @Override
@@ -140,6 +142,27 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
                 Utils.showToastById(getActivity(), R.string.tv_saved);
             } else {
                 Utils.showToastById(getActivity(), R.string.tv_error_save);
+            }
+        }
+    }
+
+    private class FetchMovieInfo extends AsyncTask<TvSearchResult, Void, Tv> {
+
+        @Override
+        protected Tv doInBackground(TvSearchResult... tvs) {
+            if (app.isConnectionPresent()) {
+                return Utils.getTheMovieDBClient().findTv(tvs[0].getId());
+            }
+            Utils.showToastByIdInUiThread(getActivity(), R.string.search_network_unavailable);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Tv tv) {
+            if (tv != null) {
+                DialogFragment dialog = AddDialog.newInstance(tv.getOriginal_name(), tv.getOverview(), tv.getFirst_air_date());
+                dialog.setTargetFragment(SearchTvFragment.this, 0);
+                dialog.show(getActivity().getFragmentManager(), "ADD_DIALOG_TAG");
             }
         }
     }

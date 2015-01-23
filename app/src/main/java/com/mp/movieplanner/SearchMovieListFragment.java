@@ -78,9 +78,7 @@ public class SearchMovieListFragment extends ListFragment implements
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         movieToAdd = (MovieSearchResult) parent.getItemAtPosition(position);
-        DialogFragment dialog = AddDialog.newInstance(movieToAdd.getTitle());
-        dialog.setTargetFragment(this, 0);
-        dialog.show(getActivity().getFragmentManager(), "ADD_DIALOG_TAG");
+        new FetchMovieInfo().execute(movieToAdd);
         return true;
     }
 
@@ -96,8 +94,12 @@ public class SearchMovieListFragment extends ListFragment implements
     private class AddMovieToDatabase extends AsyncTask<MovieSearchResult, Void, Long> {
         @Override
         protected Long doInBackground(MovieSearchResult... movies) {
-            Movie movie = Utils.getTheMovieDBClient().findMovie(movies[0].getId());
-            return movieService.saveMovie(movie);
+            if (mApp.isConnectionPresent()) {
+                Movie movie = Utils.getTheMovieDBClient().findMovie(movies[0].getId());
+                return movieService.saveMovie(movie);
+            }
+            Utils.showToastByIdInUiThread(getActivity(), R.string.search_network_unavailable);
+            return 0L;
         }
 
         @Override
@@ -141,6 +143,27 @@ public class SearchMovieListFragment extends ListFragment implements
             List<MovieSearchResult> dbMovies = Utils.toMovieSearchResult(allMovies);
             movies.removeAll(dbMovies);
             return movies;
+        }
+    }
+
+    private class FetchMovieInfo extends AsyncTask<MovieSearchResult, Void, Movie> {
+
+        @Override
+        protected Movie doInBackground(MovieSearchResult... movies) {
+            if (mApp.isConnectionPresent()) {
+                return Utils.getTheMovieDBClient().findMovie(movies[0].getId());
+            }
+            Utils.showToastByIdInUiThread(getActivity(), R.string.search_network_unavailable);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Movie movie) {
+            if (mApp.isConnectionPresent()) {
+                DialogFragment dialog = AddDialog.newInstance(movie.getOriginal_title(), movie.getOverview(), movie.getRelease_date());
+                dialog.setTargetFragment(SearchMovieListFragment.this, 0);
+                dialog.show(getActivity().getFragmentManager(), "ADD_DIALOG_TAG");
+            }
         }
     }
 }

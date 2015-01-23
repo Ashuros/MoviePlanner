@@ -37,7 +37,8 @@ public class Utils {
         for (Movie movie : movies) {
             String id = String.valueOf(movie.getMovieId());
             String title = movie.getOriginal_title();
-            movieSearchResults.add(new MovieSearchResult(id, title));
+            String releaseDate = movie.getRelease_date();
+            movieSearchResults.add(new MovieSearchResult(id, title, releaseDate));
         }
         return movieSearchResults;
     }
@@ -48,13 +49,23 @@ public class Utils {
         for (Tv tv : tvs) {
             String id = String.valueOf(tv.getTvId());
             String title = tv.getOriginal_name();
-            tvSearchResults.add(new TvSearchResult(id, title));
+            String firstAirDate = tv.getFirst_air_date();
+            tvSearchResults.add(new TvSearchResult(id, title, firstAirDate));
         }
         return tvSearchResults;
     }
 
     public static void showToastById(Activity activity, int id) {
         Toast.makeText(activity, id, Toast.LENGTH_SHORT).show();
+    }
+
+    public static void showToastByIdInUiThread(final Activity activity, final int id) {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(activity, id, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public static Movie buildMovieFromCursor(Cursor c) {

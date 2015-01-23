@@ -5,11 +5,11 @@ import android.widget.ImageView;
 
 import com.mp.movieplanner.common.ImageCache;
 
-public class DownloadListItemTask extends DownloadTask {
+public class DownloadListImageTask extends DownloadImageTask {
 
 	private final long id;
 	
-	public DownloadListItemTask(ImageCache cache, ImageView imageView, long id) {
+	public DownloadListImageTask(ImageCache cache, ImageView imageView, long id) {
 		super(cache, imageView);
 		this.id = id;
 	}
@@ -17,7 +17,7 @@ public class DownloadListItemTask extends DownloadTask {
 	@Override
 	protected void onPostExecute(Bitmap bitmap) {
 		long forPosition = (long) imageView.getTag();
-		if (forPosition == id && bitmap != null) {
+		if (bitmap != null && forPosition == id) {
 			imageView.setImageBitmap(bitmap);
 		}
 	}

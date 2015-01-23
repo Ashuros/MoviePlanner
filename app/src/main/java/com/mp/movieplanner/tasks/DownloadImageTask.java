@@ -15,16 +15,16 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
-public class DownloadTask extends AsyncTask<String, Void, Bitmap> {
+public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
-	public static final String TAG = DownloadTask.class.getSimpleName();
+	public static final String TAG = DownloadImageTask.class.getSimpleName();
 
 	private final ImageCache imageCache;
 	private final Drawable imagePlaceholder;
 	
 	protected final ImageView imageView;
 	
-	public DownloadTask(ImageCache cache, ImageView imageView) {
+	public DownloadImageTask(ImageCache cache, ImageView imageView) {
 		imageCache = cache;
 		this.imageView = imageView;
 		imagePlaceholder = imageView.getContext()
@@ -39,6 +39,10 @@ public class DownloadTask extends AsyncTask<String, Void, Bitmap> {
 	
 	@Override
 	protected Bitmap doInBackground(String... inputUrls) {
+        if (inputUrls[0] == null) {
+            return null;
+        }
+
 		if (imageCache.get(inputUrls[0]) != null) {
 			return imageCache.get(inputUrls[0]);
 		}
@@ -71,5 +75,4 @@ public class DownloadTask extends AsyncTask<String, Void, Bitmap> {
 			imageView.setImageBitmap(bitmap);
 		}
 	}
-
 }

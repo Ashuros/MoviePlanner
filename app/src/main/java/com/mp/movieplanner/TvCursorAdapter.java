@@ -2,7 +2,6 @@ package com.mp.movieplanner;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mp.movieplanner.common.ImageCache;
-import com.mp.movieplanner.data.MovieContract;
 import com.mp.movieplanner.data.TvContract;
-import com.mp.movieplanner.tasks.DownloadListItemTask;
+import com.mp.movieplanner.tasks.DownloadListImageTask;
 
 public class TvCursorAdapter extends CursorAdapter {
 
@@ -62,7 +60,7 @@ public class TvCursorAdapter extends CursorAdapter {
 
         if (thumbUrl != null) {
             if (cache.get(thumbUrl) == null) {
-                new DownloadListItemTask(cache, holder.image, id).execute(thumbUrl);
+                new DownloadListImageTask(cache, holder.image, id).execute(thumbUrl);
             } else {
                 holder.image.setImageBitmap(cache.get(thumbUrl));
             }

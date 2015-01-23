@@ -2,7 +2,6 @@ package com.mp.movieplanner;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mp.movieplanner.data.MovieContract.Movies;
-import com.mp.movieplanner.tasks.DownloadListItemTask;
+import com.mp.movieplanner.tasks.DownloadListImageTask;
 import com.mp.movieplanner.common.ImageCache;
 
 public class MovieCursorAdapter extends CursorAdapter {
@@ -62,7 +61,7 @@ public class MovieCursorAdapter extends CursorAdapter {
 
         if (thumbUrl != null) {
             if (mCache.get(thumbUrl) == null) {
-                new DownloadListItemTask(mCache, holder.image, id).execute(thumbUrl);
+                new DownloadListImageTask(mCache, holder.image, id).execute(thumbUrl);
             } else {
                 holder.image.setImageBitmap(mCache.get(thumbUrl));
             }

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '21.1.1'
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         applicationId "com.mp.movieplanner"
@@ -33,4 +33,5 @@ dependencies {
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.4.3'
     compile 'com.android.support:support-v13:21.0.2'
+    compile 'org.quanqi:mpandroidchart:1.7.5'
 }
