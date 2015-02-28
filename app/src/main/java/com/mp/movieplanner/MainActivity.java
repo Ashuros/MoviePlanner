@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.mp.movieplanner.charts.ChartActivity;
 import com.mp.movieplanner.common.CollectionType;
 
 public class MainActivity extends Activity implements MovieListFragment.OnMovieSelectedListener, TvListFragment.OnTvSelectedListener {

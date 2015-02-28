@@ -84,18 +84,25 @@ public class SearchMovieListFragment extends ListFragment implements
 
     @Override
     public void onAddDialogPositiveClick(DialogFragment dialog) {
-        new AddMovieToDatabase().execute(movieToAdd);
+        new AddMovieToDatabase(movieToAdd).execute();
     }
 
     public interface OnSearchMovieSelectedListener {
         public void onSearchMovieSelected(int position);
     }
 
-    private class AddMovieToDatabase extends AsyncTask<MovieSearchResult, Void, Long> {
+    private class AddMovieToDatabase extends AsyncTask<Void, Void, Long> {
+
+        private final MovieSearchResult movieSearchResult;
+
+        public AddMovieToDatabase(MovieSearchResult movie) {
+            this.movieSearchResult = movie;
+        }
+
         @Override
-        protected Long doInBackground(MovieSearchResult... movies) {
+        protected Long doInBackground(Void... movies) {
             if (mApp.isConnectionPresent()) {
-                Movie movie = Utils.getTheMovieDBClient().findMovie(movies[0].getId());
+                Movie movie = Utils.getTheMovieDBClient().findMovie(movieSearchResult.getId());
                 return movieService.saveMovie(movie);
             }
             Utils.showToastByIdInUiThread(getActivity(), R.string.search_network_unavailable);
@@ -105,7 +112,7 @@ public class SearchMovieListFragment extends ListFragment implements
         @Override
         protected void onPostExecute(Long movieId) {
             if (movieId != 0) {
-                adapter.remove(movieToAdd);
+                adapter.remove(movieSearchResult);
                 adapter.notifyDataSetChanged();
                 Utils.showToastById(getActivity(), R.string.search_movie_saved);
             } else {

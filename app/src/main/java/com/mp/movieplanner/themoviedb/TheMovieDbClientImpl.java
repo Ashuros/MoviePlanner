@@ -11,14 +11,10 @@ import com.mp.movieplanner.themoviedb.response.GenreResultResponse;
 import com.mp.movieplanner.themoviedb.response.MovieSearchResultResponse;
 import com.mp.movieplanner.themoviedb.response.TvSearchResultResponse;
 
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 import static com.mp.movieplanner.themoviedb.TheMovieDbURL.FIND_MOVIE_URL;
 import static com.mp.movieplanner.themoviedb.TheMovieDbURL.SEARCH_MOVIE_URL;
@@ -50,7 +46,7 @@ public class TheMovieDbClientImpl implements TheMovieDbClient {
     @Override
     public List<Genre> retrieveMovieGenres() {
         Log.d(TAG, "Fetching all movie genres");
-        GenreResultResponse response =  restTemplate.getForObject(TheMovieDbURL.GET_MOVIE_GENRES, GenreResultResponse.class, "");
+        GenreResultResponse response = restTemplate.getForObject(TheMovieDbURL.GET_MOVIE_GENRES, GenreResultResponse.class, "");
         Log.d(TAG, response.getGenres().toString());
         return response.getGenres();
     }

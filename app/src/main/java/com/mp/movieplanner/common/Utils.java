@@ -56,7 +56,9 @@ public class Utils {
     }
 
     public static void showToastById(Activity activity, int id) {
-        Toast.makeText(activity, id, Toast.LENGTH_SHORT).show();
+        if (activity != null) {
+            Toast.makeText(activity, id, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static void showToastByIdInUiThread(final Activity activity, final int id) {

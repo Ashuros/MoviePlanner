@@ -49,18 +49,13 @@ public class MovieSearchResult {
         MovieSearchResult that = (MovieSearchResult) o;
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (release_date != null ? !release_date.equals(that.release_date) : that.release_date != null) return false;
-        if (title != null ? !title.equals(that.title) : that.title != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (title != null ? title.hashCode() : 0);
-        result = 31 * result + (release_date != null ? release_date.hashCode() : 0);
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
 
     @Override
