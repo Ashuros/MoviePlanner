@@ -88,7 +88,7 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
 
     @Override
     public void onAddDialogPositiveClick(DialogFragment dialog) {
-        new AddTvToDatabase().execute(tvToAdd);
+        new AddTvToDatabase(tvToAdd).execute();
     }
 
     private class SearchTvTask extends AsyncTask<String, Void, List<TvSearchResult>> {
@@ -123,11 +123,18 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
         }
     }
 
-    private class AddTvToDatabase extends AsyncTask<TvSearchResult, Void, Long> {
+    private class AddTvToDatabase extends AsyncTask<Void, Void, Long> {
+
+        private final TvSearchResult tvSearchResult;
+
+        public AddTvToDatabase(TvSearchResult tvSearchResult) {
+            this.tvSearchResult = tvSearchResult;
+        }
+
         @Override
-        protected Long doInBackground(TvSearchResult... tvs) {
+        protected Long doInBackground(Void... tvs) {
             if (app.isConnectionPresent()) {
-                Tv tv = Utils.getTheMovieDBClient().findTv(tvs[0].getId());
+                Tv tv = Utils.getTheMovieDBClient().findTv(tvSearchResult.getId());
                 return tvService.saveTv(tv);
             }
             Utils.showToastByIdInUiThread(getActivity(), R.string.search_network_unavailable);
@@ -137,7 +144,7 @@ public class SearchTvFragment extends ListFragment implements AdapterView.OnItem
         @Override
         protected void onPostExecute(Long tvId) {
             if (tvId != 0) {
-                adapter.remove(tvToAdd);
+                adapter.remove(tvSearchResult);
                 adapter.notifyDataSetChanged();
                 Utils.showToastById(getActivity(), R.string.tv_saved);
             } else {
