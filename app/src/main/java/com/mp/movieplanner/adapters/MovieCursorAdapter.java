@@ -1,4 +1,4 @@
-package com.mp.movieplanner;
+package com.mp.movieplanner.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,21 +9,24 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mp.movieplanner.common.ImageCache;
-import com.mp.movieplanner.data.TvContract;
+import com.mp.movieplanner.MoviePlannerApp;
+import com.mp.movieplanner.R;
+import com.mp.movieplanner.data.MovieContract.Movies;
 import com.mp.movieplanner.tasks.DownloadListImageTask;
+import com.mp.movieplanner.common.ImageCache;
 
-public class TvCursorAdapter extends CursorAdapter {
+public class MovieCursorAdapter extends CursorAdapter {
 
-    private final String TAG = TvCursorAdapter.class.getSimpleName();
+    private final String TAG = MovieCursorAdapter.class.getSimpleName();
 
-    private final LayoutInflater inflater;
-    private final ImageCache cache;
+    private final LayoutInflater mInflater;
+    private final ImageCache mCache;
 
-    public TvCursorAdapter(Context context, Cursor c, int flags, ImageCache cache) {
+
+    public MovieCursorAdapter(Context context, Cursor c, int flags, ImageCache cache) {
         super(context, c, flags);
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.cache = cache;
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mCache = cache;
     }
 
     @Override
@@ -33,7 +36,7 @@ public class TvCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.list_item, parent, false);
+        View view = mInflater.inflate(R.layout.list_item, parent, false);
 
         TextView originalTitle = (TextView) view.findViewById(R.id.list_item_original_title);
         ImageView imageView = (ImageView) view.findViewById(R.id.list_item_image);
@@ -49,20 +52,20 @@ public class TvCursorAdapter extends CursorAdapter {
     public void populateView(final View listItem, final Cursor c) {
         ViewHolder holder = (ViewHolder) listItem.getTag();
 
-        long id = c.getLong(c.getColumnIndex(TvContract.Tv._ID));
-        String originalName = c.getString(c.getColumnIndex(TvContract.Tv.ORIGINAL_NAME));
-        String thumbUrl = c.getString(c.getColumnIndex(TvContract.Tv.POSTER_PATH));
+        long id = c.getLong(c.getColumnIndex(Movies._ID));
+        String originalTitle = c.getString(c.getColumnIndex(Movies.ORIGINAL_TITLE));
+        String thumbUrl = c.getString(c.getColumnIndex(Movies.POSTER_PATH));
 
-        holder.text.setText(originalName);
+        holder.text.setText(originalTitle);
 
         holder.image.setImageDrawable(null);
         holder.image.setTag(id);
 
         if (thumbUrl != null) {
-            if (cache.get(thumbUrl) == null) {
-                new DownloadListImageTask(cache, holder.image, id).execute(thumbUrl);
+            if (mCache.get(thumbUrl) == null) {
+                new DownloadListImageTask(mCache, holder.image, id).execute(thumbUrl);
             } else {
-                holder.image.setImageBitmap(cache.get(thumbUrl));
+                holder.image.setImageBitmap(mCache.get(thumbUrl));
             }
         }
     }
@@ -76,4 +79,5 @@ public class TvCursorAdapter extends CursorAdapter {
             this.image = image;
         }
     }
+
 }

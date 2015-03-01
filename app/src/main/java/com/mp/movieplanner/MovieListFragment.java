@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.mp.movieplanner.adapters.MovieCursorAdapter;
 import com.mp.movieplanner.common.Utils;
 import com.mp.movieplanner.data.MovieContract.Movies;
 import com.mp.movieplanner.data.service.MovieService;

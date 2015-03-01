@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.mp.movieplanner.adapters.TvCursorAdapter;
 import com.mp.movieplanner.common.Utils;
 import com.mp.movieplanner.data.TvContract;
 import com.mp.movieplanner.data.service.TvService;
@@ -121,7 +122,7 @@ public class TvListFragment extends ListFragment implements LoaderManager.Loader
         public void onTvSelected(long position);
     }
 
-    private  class RemoveTvTask extends AsyncTask<Tv, Void, Boolean> {
+    private class RemoveTvTask extends AsyncTask<Tv, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Tv... tv) {
             return tvService.deleteTv(tv[0]);

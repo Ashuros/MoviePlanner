@@ -5,6 +5,7 @@ import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.model.MovieSearchResult;
 import com.mp.movieplanner.model.Tv;
 import com.mp.movieplanner.model.TvSearchResult;
+import com.mp.movieplanner.themoviedb.response.Backdrop;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface TheMovieDbClient {
     public Tv findTv(String id);
 
     public List<Genre> retrieveTvGenres();
+
+    public List<Backdrop> getImagesForMovie(long movieId);
 }

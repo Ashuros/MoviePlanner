@@ -15,6 +15,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+import static com.mp.movieplanner.themoviedb.TheMovieDbURL.ImageSizes;
+
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 
 	public static final String TAG = DownloadImageTask.class.getSimpleName();
@@ -51,7 +53,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 		Bitmap bitmap = null;
 		
 		try {
-	         URL url = new URL(TheMovieDbURL.IMAGE_URL + TheMovieDbURL.IMAGE_SIZE_W92 + inputUrls[0]);
+	         URL url = new URL(TheMovieDbURL.IMAGE_URL + ImageSizes.W154 + inputUrls[0]);
 	         URLConnection conn = url.openConnection();
 	         conn.setConnectTimeout(3000);
 	         conn.setReadTimeout(5000);

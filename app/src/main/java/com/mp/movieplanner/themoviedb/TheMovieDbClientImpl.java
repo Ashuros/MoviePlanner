@@ -7,7 +7,9 @@ import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.model.MovieSearchResult;
 import com.mp.movieplanner.model.Tv;
 import com.mp.movieplanner.model.TvSearchResult;
+import com.mp.movieplanner.themoviedb.response.Backdrop;
 import com.mp.movieplanner.themoviedb.response.GenreResultResponse;
+import com.mp.movieplanner.themoviedb.response.ImageResponse;
 import com.mp.movieplanner.themoviedb.response.MovieSearchResultResponse;
 import com.mp.movieplanner.themoviedb.response.TvSearchResultResponse;
 
@@ -70,5 +72,12 @@ public class TheMovieDbClientImpl implements TheMovieDbClient {
         GenreResultResponse response = restTemplate.getForObject(TheMovieDbURL.GET_TV_GENRES, GenreResultResponse.class);
         Log.d(TAG, response.getGenres().toString());
         return response.getGenres();
+    }
+
+    @Override
+    public List<Backdrop> getImagesForMovie(long movieId) {
+        Log.d(TAG, "Fetching images for movie with ID: " + movieId);
+        ImageResponse imageResponse = restTemplate.getForObject(TheMovieDbURL.TV_IMAGES, ImageResponse.class, movieId);
+        return imageResponse.getBackdrops();
     }
 }

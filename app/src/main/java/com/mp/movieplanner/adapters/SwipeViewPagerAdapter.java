@@ -1,22 +1,21 @@
-package com.mp.movieplanner;
+package com.mp.movieplanner.adapters;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
-public class CollectionPagerAdapter extends FragmentPagerAdapter {
+public class SwipeViewPagerAdapter extends FragmentPagerAdapter {
 
     private List<Fragment> fragments;
 
-    public CollectionPagerAdapter(FragmentManager fm) {
+    public SwipeViewPagerAdapter(FragmentManager fm, Fragment... frags) {
         super(fm);
-        fragments = new ArrayList<>();
-        fragments.add(new MovieListFragment());
-        fragments.add(new TvListFragment());
+        fragments = new ArrayList<>(Arrays.asList(frags));
     }
 
     @Override

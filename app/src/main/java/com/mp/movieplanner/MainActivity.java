@@ -15,14 +15,13 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.mp.movieplanner.adapters.SwipeViewPagerAdapter;
 import com.mp.movieplanner.charts.ChartActivity;
 import com.mp.movieplanner.common.CollectionType;
 
 public class MainActivity extends Activity implements MovieListFragment.OnMovieSelectedListener, TvListFragment.OnTvSelectedListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
-
-    private static final String TAG_MOVIE_LIST = "movie_list";
 
     private MoviePlannerApp app;
 
@@ -35,7 +34,7 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
 
         app = (MoviePlannerApp) getApplication();
 
-        CollectionPagerAdapter swipeAdapter = new CollectionPagerAdapter(getFragmentManager());
+        SwipeViewPagerAdapter swipeAdapter = new SwipeViewPagerAdapter(getFragmentManager(), new MovieListFragment(), new TvListFragment());
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(swipeAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -57,14 +56,10 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
             }
 
             @Override
-            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-            }
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
             @Override
-            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-            }
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
         };
 
         actionBar.addTab(actionBar.newTab()
