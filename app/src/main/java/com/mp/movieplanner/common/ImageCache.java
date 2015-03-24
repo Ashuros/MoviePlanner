@@ -5,11 +5,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 
 public class ImageCache {
 	
-	private static final int IMAGE_CACHE_SIZE = 250;
+	private static final int IMAGE_CACHE_SIZE = 64;
 	
 	private final Map<String, Bitmap> cache;
 	
@@ -17,7 +18,7 @@ public class ImageCache {
 		cache = Collections.synchronizedMap(new LinkedHashMap<String, Bitmap>(ImageCache.IMAGE_CACHE_SIZE + 1, .75f, true) {
 			@Override
 			public boolean removeEldestEntry(Map.Entry<String, Bitmap> eldest) {
-				return size() > ImageCache.IMAGE_CACHE_SIZE;
+                return size() > ImageCache.IMAGE_CACHE_SIZE;
 			}
 		});
 	}

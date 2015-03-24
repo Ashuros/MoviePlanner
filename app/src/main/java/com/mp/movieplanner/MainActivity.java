@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.mp.movieplanner.adapters.SwipeViewPagerAdapter;
 import com.mp.movieplanner.charts.ChartActivity;
 import com.mp.movieplanner.common.CollectionType;
+import com.mp.movieplanner.fragments.MovieDetailsFragment;
 
 public class MainActivity extends Activity implements MovieListFragment.OnMovieSelectedListener, TvListFragment.OnTvSelectedListener {
 
@@ -73,7 +74,7 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
 
     @Override
     public void onMovieSelected(long position) {
-        Intent intent = new Intent(this, MovieDetails.class);
+        Intent intent = new Intent(this, MovieDetailsFragment.class);
         intent.putExtra("POSITION", position);
         startActivity(intent);
     }

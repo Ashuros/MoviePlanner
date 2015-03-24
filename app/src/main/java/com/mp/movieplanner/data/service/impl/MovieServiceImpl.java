@@ -84,8 +84,6 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public long saveMovie(Movie movie) {
         Log.i(DB_INFO, "Saving movie " + movie);
-        // NOTE could wrap entity manip functions in MovieServiceImpl, make "manager" for each entity
-        // here though, to keep it simpler, we use the DAOs directly (even when multiple are involved)
         long movieId = 0L;
 
         // put it in a transaction, since we're touching multiple tables

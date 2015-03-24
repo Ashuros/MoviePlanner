@@ -43,16 +43,14 @@ public class TvDetails extends Activity {
         ActionBar.TabListener tabListener = new ActionBar.TabListener() {
             @Override
             public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-                viewPager.setBackgroundColor(tab.getPosition());
+                viewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
-            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-            }
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
 
             @Override
-            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-            }
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
         };
 
         actionBar.addTab(actionBar.newTab()

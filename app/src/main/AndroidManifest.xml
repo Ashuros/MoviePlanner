@@ -35,7 +35,7 @@
                        android:resource="@xml/searchable" />
         </activity>
 
-        <activity android:name=".MovieDetails" />
+        <activity android:name=".fragments.MovieDetailsFragment" />
         <activity android:name=".TvDetails" />
         <activity android:name=".charts.ChartActivity" />
         

@@ -44,8 +44,6 @@ public class ChartActivity extends Activity {
 
         mChart.setDescription("");
 
-        mChart.setDrawCenterText(true);
-
         mChart.setDrawHoleEnabled(true);
 
         mChart.setRotationAngle(0);

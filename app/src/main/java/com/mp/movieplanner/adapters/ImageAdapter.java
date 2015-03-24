@@ -26,8 +26,8 @@ public class ImageAdapter extends BaseAdapter {
         this.context = context;
         this.backdrops = backdrops;
         this.imageCache = imageCache;
-        width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 85, context.getResources().getDisplayMetrics());
-        height =  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 85, context.getResources().getDisplayMetrics());
+        this.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, context.getResources().getDisplayMetrics());
+        this.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, context.getResources().getDisplayMetrics());
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ImageAdapter extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setTag(position);
+        imageView.setTag(position); //TODO probably redundant
         Backdrop backdrop = backdrops.get(position);
         String filePath = backdrop.getFilePath();
         if (filePath != null) {

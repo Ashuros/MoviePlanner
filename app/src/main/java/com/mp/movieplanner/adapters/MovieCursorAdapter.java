@@ -9,11 +9,10 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mp.movieplanner.MoviePlannerApp;
 import com.mp.movieplanner.R;
+import com.mp.movieplanner.common.ImageCache;
 import com.mp.movieplanner.data.MovieContract.Movies;
 import com.mp.movieplanner.tasks.DownloadListImageTask;
-import com.mp.movieplanner.common.ImageCache;
 
 public class MovieCursorAdapter extends CursorAdapter {
 
