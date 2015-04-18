@@ -22,6 +22,8 @@ public final class TheMovieDbURL {
 
     public static final String TV_IMAGES = "http://api.themoviedb.org/3/tv/{id}/images?" + API_KEY;
 
+    public static final String MOVIE_IMAGES = "http://api.themoviedb.org/3/movie/{id}/images?" + API_KEY;
+
     public enum ImageSizes {
         W92("w92"),
         W154("w154");

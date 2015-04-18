@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 
 import com.mp.movieplanner.R;
 import com.mp.movieplanner.adapters.SwipeViewPagerAdapter;
+import com.mp.movieplanner.fragments.MovieDetailsFragment;
+import com.mp.movieplanner.fragments.MovieGalleryFragment;
 
 public class MovieDetails extends Activity {
 
@@ -21,10 +23,13 @@ public class MovieDetails extends Activity {
         Bundle bundle = new Bundle();
         bundle.putLong("POSITION", position);
 
-        //TODO MovieDetailsFragment
-        //TODO MovieGalleryFragmtn
+        MovieDetailsFragment movieDetailsFragment = new MovieDetailsFragment();
+        movieDetailsFragment.setArguments(bundle);
 
-        final SwipeViewPagerAdapter movieDetailsAdapter = new SwipeViewPagerAdapter(getFragmentManager());
+        MovieGalleryFragment gallery = new MovieGalleryFragment();
+        gallery.setArguments(bundle);
+
+        final SwipeViewPagerAdapter movieDetailsAdapter = new SwipeViewPagerAdapter(getFragmentManager(), movieDetailsFragment, gallery);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.details_pager);
         viewPager.setAdapter(movieDetailsAdapter);
         viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {

@@ -74,7 +74,7 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
 
     @Override
     public void onMovieSelected(long position) {
-        Intent intent = new Intent(this, MovieDetailsFragment.class);
+        Intent intent = new Intent(this, MovieDetails.class);
         intent.putExtra("POSITION", position);
         startActivity(intent);
     }

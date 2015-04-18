@@ -1,7 +1,11 @@
 package com.mp.movieplanner.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,34 +15,45 @@ import com.mp.movieplanner.model.Genre;
 import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.tasks.DownloadListImageTask;
 
-public class MovieDetailsFragment extends Activity {
+public class MovieDetailsFragment extends Fragment {
+    final static String ARG_POSITION = "POSITION";
+    private long currentPosition = -1;
+
     private MoviePlannerApp app;
 
     private ImageView image;
     private TextView originalTitle;
     private TextView releaseDate;
     private TextView overview;
+
     private TextView genres;
 
-    private long position;
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (savedInstanceState !=  null) {
+            currentPosition = savedInstanceState.getLong(ARG_POSITION);
+        }
+        currentPosition = getArguments().getLong("POSITION", -1);
+        return inflater.inflate(R.layout.details, container, false);
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.details);
-        position = getIntent().getExtras().getLong("POSITION");
-        app = (MoviePlannerApp) getApplication();
-        image = (ImageView) findViewById(R.id.details_image);
-        originalTitle = (TextView) findViewById(R.id.details_title);
-        releaseDate = (TextView) findViewById(R.id.details_date);
-        overview = (TextView) findViewById(R.id.details_overview);
-        genres = (TextView) findViewById(R.id.details_genres);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        app = (MoviePlannerApp) getActivity().getApplication();
+        image = (ImageView) getView().findViewById(R.id.details_image);
+        originalTitle = (TextView) getView().findViewById(R.id.details_title);
+        releaseDate = (TextView) getView().findViewById(R.id.details_date);
+        overview = (TextView) getView().findViewById(R.id.details_overview);
+        genres = (TextView) getView().findViewById(R.id.details_genres);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        updateMovieView(position);
+        if (currentPosition != -1) {
+            updateMovieView(currentPosition);
+        }
     }
 
     public void updateMovieView(long position) {
@@ -55,5 +70,11 @@ public class MovieDetailsFragment extends Activity {
                        .append(", ");
         }
         genres.setText(genreLabels.substring(0, genreLabels.length() > 0 ? genreLabels.length() - 2 : genreLabels.length()));
+    }
+
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Save the current article selection in case we need to recreate the fragment
+        outState.putLong(ARG_POSITION, currentPosition);
     }
 }

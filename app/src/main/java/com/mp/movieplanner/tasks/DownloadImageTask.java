@@ -53,7 +53,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
 		Bitmap bitmap = null;
 		
 		try {
-	         URL url = new URL(TheMovieDbURL.IMAGE_URL + ImageSizes.W92 + inputUrls[0]);
+	         URL url = new URL(TheMovieDbURL.IMAGE_URL + ImageSizes.W154 + inputUrls[0]);
 	         URLConnection conn = url.openConnection();
 	         conn.setConnectTimeout(3000);
 	         conn.setReadTimeout(5000);

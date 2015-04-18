@@ -51,11 +51,11 @@ public class TvDetailsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         if (currentPosition != -1) {
-            updateMovieView(currentPosition);
+            updateTvView(currentPosition);
         }
     }
 
-    public void updateMovieView(long position){
+    public void updateTvView(long position){
         Tv tv = app.getTvService().getTvById(position);
         image.setTag(position);
         new DownloadListImageTask(app.getImageCache(), image, position).execute(tv.getPoster_path());
