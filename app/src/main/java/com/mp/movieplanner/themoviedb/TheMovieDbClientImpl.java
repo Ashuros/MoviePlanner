@@ -75,9 +75,16 @@ public class TheMovieDbClientImpl implements TheMovieDbClient {
     }
 
     @Override
+    public List<Backdrop> getImagesForTv(long tvId) {
+        Log.d(TAG, "Fetching images for movie with ID: " + tvId);
+        ImageResponse imageResponse = restTemplate.getForObject(TheMovieDbURL.TV_IMAGES, ImageResponse.class, tvId);
+        return imageResponse.getBackdrops();
+    }
+
+    @Override
     public List<Backdrop> getImagesForMovie(long movieId) {
-        Log.d(TAG, "Fetching images for movie with ID: " + movieId);
-        ImageResponse imageResponse = restTemplate.getForObject(TheMovieDbURL.TV_IMAGES, ImageResponse.class, movieId);
+        Log.d(TAG, "Fetching images for Tv with ID: " + movieId);
+        ImageResponse imageResponse = restTemplate.getForObject(TheMovieDbURL.MOVIE_IMAGES, ImageResponse.class, movieId);
         return imageResponse.getBackdrops();
     }
 }

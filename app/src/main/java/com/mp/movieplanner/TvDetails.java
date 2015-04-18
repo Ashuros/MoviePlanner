@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
 import com.mp.movieplanner.adapters.SwipeViewPagerAdapter;
-import com.mp.movieplanner.fragments.GalleryFragment;
+import com.mp.movieplanner.fragments.TvGalleryFragment;
 import com.mp.movieplanner.fragments.TvDetailsFragment;
 
 public class TvDetails extends Activity {
@@ -25,7 +25,7 @@ public class TvDetails extends Activity {
         TvDetailsFragment tvDetailsFragment = new TvDetailsFragment();
         tvDetailsFragment.setArguments(bundle);
 
-        GalleryFragment gallery = new GalleryFragment();
+        TvGalleryFragment gallery = new TvGalleryFragment();
         gallery.setArguments(bundle);
 
         final SwipeViewPagerAdapter detailsAdapter = new SwipeViewPagerAdapter(getFragmentManager(), tvDetailsFragment, gallery);

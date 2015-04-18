@@ -4,7 +4,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
 
@@ -13,6 +13,10 @@ allprojects {
         jcenter()
         maven {
             url 'http://repo.spring.io/milestone'
+        }
+
+        maven {
+            url 'https://jitpack.io'
         }
     }
 }

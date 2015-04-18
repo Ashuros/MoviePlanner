@@ -24,5 +24,7 @@ public interface TheMovieDbClient {
 
     public List<Genre> retrieveTvGenres();
 
+    public List<Backdrop> getImagesForTv(long tvId);
+
     public List<Backdrop> getImagesForMovie(long movieId);
 }

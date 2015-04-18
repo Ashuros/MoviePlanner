@@ -16,18 +16,18 @@ import com.mp.movieplanner.R;
 import com.mp.movieplanner.adapters.ImageAdapter;
 import com.mp.movieplanner.common.ImageCache;
 import com.mp.movieplanner.common.Utils;
-import com.mp.movieplanner.data.service.TvService;
-import com.mp.movieplanner.model.Tv;
+import com.mp.movieplanner.data.service.MovieService;
+import com.mp.movieplanner.model.Movie;
 import com.mp.movieplanner.themoviedb.response.Backdrop;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class GalleryFragment extends Fragment {
+public class MovieGalleryFragment extends Fragment {
 
     private MoviePlannerApp app;
-    private TvService tvService;
+    private MovieService movieService;
     private ImageCache imageCache;
     private ImageAdapter gridViewImageAdapter;
     private long position;
@@ -40,14 +40,14 @@ public class GalleryFragment extends Fragment {
 
         position = getArguments().getLong("POSITION", -1L);
 
-        tvService = app.getTvService();
+        movieService = app.getMovieService();
         imageCache = app.getImageCache();
     }
 
     @Override
-    public View onCreateView(LayoutInflater infalter, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(infalter, container, savedInstanceState);
-        return infalter.inflate(R.layout.grid_view, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        return inflater.inflate(R.layout.grid_view, container, false);
     }
 
     @Override
@@ -55,13 +55,12 @@ public class GalleryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         gridViewImageAdapter = new ImageAdapter(getActivity(), new ArrayList<Backdrop>(), imageCache);
-
         GridView gridView = (GridView) view.findViewById(R.id.gridview);
         gridView.setAdapter(gridViewImageAdapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getActivity(), "" + position, Toast.LENGTH_SHORT).show();
             }
         });
@@ -70,8 +69,8 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Tv tv = tvService.getTvById(position);
-        new FetchImagesURLs(tv.getTvId()).execute();
+        Movie movie = movieService.getMovie(position);
+        new FetchImagesURLs(movie.getMovieId()).execute();
     }
 
     @Override
@@ -81,16 +80,16 @@ public class GalleryFragment extends Fragment {
     }
 
     private class FetchImagesURLs extends AsyncTask<Void, List<Backdrop>, List<Backdrop>> {
-        private final long tvId;
+        private final long movieId;
 
         public FetchImagesURLs(long tvId) {
-            this.tvId = tvId;
+            this.movieId = tvId;
         }
 
         @Override
         protected List<Backdrop> doInBackground(Void... movieId) {
             if (app.isConnectionPresent()) {
-                return Utils.getTheMovieDBClient().getImagesForMovie(tvId);
+                return Utils.getTheMovieDBClient().getImagesForMovie(this.movieId);
             }
             return Collections.emptyList();
         }
@@ -101,3 +100,32 @@ public class GalleryFragment extends Fragment {
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
