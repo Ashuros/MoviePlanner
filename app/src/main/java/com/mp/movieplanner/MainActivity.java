@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.mp.movieplanner.adapters.SwipeViewPagerAdapter;
 import com.mp.movieplanner.charts.ChartActivity;
 import com.mp.movieplanner.common.CollectionType;
-import com.mp.movieplanner.fragments.MovieDetailsFragment;
+import com.mp.movieplanner.dialog.UserGuideDialog;
 
 public class MainActivity extends Activity implements MovieListFragment.OnMovieSelectedListener, TvListFragment.OnTvSelectedListener {
 
@@ -57,10 +57,12 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
             }
 
             @Override
-            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+            }
 
             @Override
-            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {}
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+            }
         };
 
         actionBar.addTab(actionBar.newTab()
@@ -93,7 +95,12 @@ public class MainActivity extends Activity implements MovieListFragment.OnMovieS
                 Intent intent = new Intent(this, ChartActivity.class);
                 startActivity(intent);
                 return true;
+
+            case R.id.about:
+                UserGuideDialog dialog = new UserGuideDialog();
+                dialog.show(getFragmentManager(), "USER_GUIDE_DIALOG");
         }
+
         return super.onOptionsItemSelected(item);
     }
 

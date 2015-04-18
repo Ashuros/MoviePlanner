@@ -33,6 +33,14 @@
 
     <string name="first_air_date">First air date: %1$s</string>
 
-    <string name="about">About</string>
+    <string name="about">User guide</string>
+
+    <string name="user_guide_title">User guide</string>
+
+    <string name="user_guide_text1">In order add movies to your collection click the search button in the upper right part of the appplication:</string>
+    <string name="user_guide_text2">Depending on your device capabilities and configuration you may see the following image which will allow you to perform voice search:</string>
+    <string name="user_guide_text3">After performing search you will get a list of movies related to what you have typed or said to search query. You can freely switch between movies and tvs to perform this operation.\n
+                                    If you want to add particular movie or tv to your collection press and hold on one position. A popout will appear questoning if you want to save information on your device.
+                                    In order to remove particular position from your device simply press and hold and a another popout window will appear to delete it.</string>
 
 </resources>
