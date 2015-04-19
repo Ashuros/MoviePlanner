@@ -43,4 +43,8 @@
                                     If you want to add particular movie or tv to your collection press and hold on one position. A popout will appear questoning if you want to save information on your device.
                                     In order to remove particular position from your device simply press and hold and a another popout window will appear to delete it.</string>
 
+    <string name="movie_bar_chart">Movie bar chart</string>
+    <string name="tv_bar_chart">Tv bar chart</string>
+    <string name="pie_chart">Pie chart</string>
+
 </resources>

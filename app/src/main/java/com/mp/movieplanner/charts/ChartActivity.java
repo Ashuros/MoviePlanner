@@ -1,99 +1,62 @@
 package com.mp.movieplanner.charts;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.Color;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.view.WindowManager;
+import android.support.v4.view.ViewPager;
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.mp.movieplanner.MoviePlannerApp;
 import com.mp.movieplanner.R;
-import com.mp.movieplanner.data.service.MovieService;
-import com.mp.movieplanner.data.service.TvService;
-
-import java.util.ArrayList;
+import com.mp.movieplanner.adapters.SwipeViewPagerAdapter;
+import com.mp.movieplanner.charts.fragments.MovieBarChartFragment;
+import com.mp.movieplanner.charts.fragments.PieChartFragment;
+import com.mp.movieplanner.charts.fragments.TvBarChartFragment;
 
 public class ChartActivity extends Activity {
-
-    private PieChart mChart;
-    private MovieService movieService;
-    private TvService tvService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.chart_view_pager);
 
-        setContentView(R.layout.chart_info);
+        SwipeViewPagerAdapter swipeAdapter = new SwipeViewPagerAdapter(getFragmentManager(), new PieChartFragment(), new MovieBarChartFragment(), new TvBarChartFragment());
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(swipeAdapter);
+        viewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                getActionBar().setSelectedNavigationItem(position);
+            }
+        });
 
-        MoviePlannerApp app = (MoviePlannerApp) getApplication();
-        movieService = app.getMovieService();
-        tvService = app.getTvService();
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+            @Override
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
 
-        mChart = (PieChart) findViewById(R.id.pie_chart);
-        mChart.setUsePercentValues(true);
+            @Override
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+            }
 
-        mChart.setHoleRadius(60f);
+            @Override
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+            }
+        };
 
-        mChart.setDescription("");
+        actionBar.addTab(actionBar.newTab()
+                .setText(R.string.pie_chart)
+                .setTabListener(tabListener));
 
-        mChart.setDrawHoleEnabled(true);
+        actionBar.addTab(actionBar.newTab()
+                .setText(R.string.movie_bar_chart)
+                .setTabListener(tabListener));
 
-        mChart.setRotationAngle(0);
-
-        mChart.setRotationEnabled(true);
-
-        mChart.animateXY(1500, 1500);
-
-        setData();
+        actionBar.addTab(actionBar.newTab()
+                .setText(R.string.tv_bar_chart)
+                .setTabListener(tabListener));
     }
 
-    private void setData() {
-        ArrayList<Entry> yVals = new ArrayList<>();
-        yVals.add(new Entry(movieService.getAllMovies().size(), 0));
-        yVals.add(new Entry(tvService.getAllTvs().size(), 1));
-
-        ArrayList<String> xVals = new ArrayList<>();
-
-        xVals.add("Movies: " + movieService.getAllMovies().size());
-        xVals.add("TV: " + tvService.getAllTvs().size());
-
-        PieDataSet dataSet = new PieDataSet(yVals, "Your collection");
-        dataSet.setSliceSpace(3f);
-
-        ArrayList<Integer> colors = new ArrayList<>();
-
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        colors.add(ColorTemplate.getHoloBlue());
-
-        dataSet.setColors(colors);
-
-        PieData data = new PieData(xVals, dataSet);
-        mChart.setData(data);
-
-        mChart.highlightValues(null);
-
-        mChart.invalidate();
-    }
 }
