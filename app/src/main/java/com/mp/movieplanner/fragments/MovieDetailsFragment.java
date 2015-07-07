@@ -25,7 +25,7 @@ public class MovieDetailsFragment extends Fragment {
     private TextView originalTitle;
     private TextView releaseDate;
     private TextView overview;
-
+    private TextView popularity;
     private TextView genres;
 
     @Override
@@ -45,6 +45,7 @@ public class MovieDetailsFragment extends Fragment {
         originalTitle = (TextView) getView().findViewById(R.id.details_title);
         releaseDate = (TextView) getView().findViewById(R.id.details_date);
         overview = (TextView) getView().findViewById(R.id.details_overview);
+        popularity = (TextView) getView().findViewById(R.id.details_popularity);
         genres = (TextView) getView().findViewById(R.id.details_genres);
     }
 
@@ -63,6 +64,7 @@ public class MovieDetailsFragment extends Fragment {
         originalTitle.setText(movie.getOriginal_title());
         releaseDate.setText(movie.getRelease_date());
         overview.setText(movie.getOverview());
+        popularity.setText(String.format("Popularity: %.2f", movie.getPopularity()));
 
         StringBuilder genreLabels = new StringBuilder();
         for (Genre g : movie.getGenres()) {

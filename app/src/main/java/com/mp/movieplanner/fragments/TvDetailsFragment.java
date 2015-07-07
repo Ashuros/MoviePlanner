@@ -25,6 +25,7 @@ public class TvDetailsFragment extends Fragment {
     private TextView originalTitle;
     private TextView releaseDate;
     private TextView overview;
+    private TextView voteAverage;
     private TextView genres;
 
     @Override
@@ -44,6 +45,7 @@ public class TvDetailsFragment extends Fragment {
         originalTitle = (TextView) getView().findViewById(R.id.details_title);
         releaseDate = (TextView) getView().findViewById(R.id.details_date);
         overview = (TextView) getView().findViewById(R.id.details_overview);
+        voteAverage = (TextView) getView().findViewById(R.id.details_popularity);
         genres = (TextView) getView().findViewById(R.id.details_genres);
     }
 
@@ -62,7 +64,7 @@ public class TvDetailsFragment extends Fragment {
         originalTitle.setText(tv.getOriginal_name());
         releaseDate.setText(tv.getFirst_air_date());
         overview.setText(tv.getOverview());
-
+        voteAverage.setText(String.format("Vote average: %.2f", tv.getVote_average()));
         StringBuilder genreLabels = new StringBuilder();
         for (Genre g : tv.getGenres()) {
             genreLabels.append(g.getName())
